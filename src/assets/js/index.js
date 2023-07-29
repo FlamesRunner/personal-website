@@ -111,14 +111,14 @@
         // Display response message
         const message = document.getElementById("contact-form-status");
         message.innerHTML = json.message;
+     
+        // Show message
+        message.style.display = "block";
 
         if (json.success) {
             // Clear form
             form.reset();
         }
-
-        // Show message
-        message.style.display = "block";
 
         // Reset captcha
         window.turnstile.reset('personal-website');
