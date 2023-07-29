@@ -116,14 +116,6 @@
         message.style.display = "block";
         
         form.reset();
-
-        // Reset captcha
-        window.turnstile.reset('personal-website');
-
-        // Hide message after 5 seconds
-        setTimeout(() => {
-            message.style.display = "none";
-        }, 5000);
     }
 
     window.onload = function() {
