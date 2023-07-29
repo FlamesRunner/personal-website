@@ -114,11 +114,8 @@
      
         // Show message
         message.style.display = "block";
-
-        if (json.success) {
-            // Clear form
-            form.reset();
-        }
+        
+        form.reset();
 
         // Reset captcha
         window.turnstile.reset('personal-website');
