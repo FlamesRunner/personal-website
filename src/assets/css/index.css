@@ -217,6 +217,7 @@ h4 {
     background-color: rgb(76, 98, 102);
     margin-bottom: 1rem;
     color: white;
+    resize: vertical;
 }
 
 .contact-form-submit {

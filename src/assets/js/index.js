@@ -97,7 +97,7 @@
         const data = new FormData(form);
 
         // Send JSON request to /api/submit
-        const response = await fetch("/api/submit", {
+        const response = fetch("/api/submit", {
             method: "POST",
             body: JSON.stringify(Object.fromEntries(data)),
             headers: {
