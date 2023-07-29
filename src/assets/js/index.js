@@ -107,6 +107,7 @@
 
         // Get response JSON
         const json = await response.json();
+        console.log(json);
 
         // Display response message
         const message = document.getElementById("contact-form-status");
