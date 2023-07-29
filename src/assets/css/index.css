@@ -9,6 +9,9 @@ body {
     box-sizing: border-box;
     color: white;
     background-color: #4f686d;
+
+    /* enable smooth scrolling */
+    scroll-behavior: smooth;
 }
 
 a {
