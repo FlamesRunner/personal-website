@@ -7,6 +7,7 @@ export async function onRequestPost(context) {
         
         return new Response(JSON.stringify({
             "success": true,
+            "data": input,
             "message": "Your message has been sent!"
         }), {
             headers: {

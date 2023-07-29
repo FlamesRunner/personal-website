@@ -120,6 +120,10 @@
         init_rt();
         init_gallery();
 
+        // Add event listener to contact form
+        const form = document.getElementById("contact-form");
+        form.addEventListener("submit", contact_form_handler);
+
         // Start interval
         window.requestAnimationFrame(trace);
     }
