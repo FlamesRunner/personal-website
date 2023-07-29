@@ -39,8 +39,6 @@
         
         // Reset X
         reset_x();
-
-        trace();
     }
 
     function trace() {
