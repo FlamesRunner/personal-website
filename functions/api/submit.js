@@ -90,6 +90,7 @@ export async function onRequestPost(context) {
             "message": "Message sent successfully."
         });
     } catch (err) {
+        console.error(err);
         return new Response('Error reading response', { status: 400 });
     }
 }
