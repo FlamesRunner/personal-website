@@ -48,7 +48,6 @@ export async function onRequestPost(context) {
         let ip = context.request.headers.get('CF-Connecting-IP');
         let input = await context.request.json();
         let { name, email, message } = input;
-        let token = input['cf-turnstile-response'];
         if (!name || !email || !message) {
             return sendResponse({
                 "success": false,
@@ -56,9 +55,16 @@ export async function onRequestPost(context) {
             });
         }
 
+        if (!input.hasOwnProperty('cf-turnstile-response')) {
+            return sendResponse({
+                "success": false,
+                "message": "Your request is missing the CloudFlare Turnstile token. Please refresh the page and try again."
+            });
+        }
+
         const url = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
         const formData = new FormData();
-        formData.append('cf-turnstile-response', token);
+        formData.append('cf-turnstile-response', input['cf-turnstile-response']);
         formData.append('ip', ip);
         formData.append('secret', '0x4AAAAAAAIAaJowwcIt0oSvMtLqszseMLA');
         const response = await fetch(url, {
@@ -70,7 +76,9 @@ export async function onRequestPost(context) {
         if (result.success !== true) {
             return sendResponse({
                 "success": false,
-                "message": "Your request is missing the CloudFlare Turnstile token. Please refresh the page and try again."
+                'token': input['cf-turnstile-response'],
+                'ip': ip,
+                "message": "Your request was invalid. Please try again."
             });
         }
 
