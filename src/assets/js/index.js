@@ -121,7 +121,7 @@
         message.style.display = "block";
 
         // Reset captcha
-        window.turnstile.reset('0x4AAAAAAAIAaGqPmjpXDLyV');
+        window.turnstile.reset('personal-website');
 
         // Hide message after 5 seconds
         setTimeout(() => {
