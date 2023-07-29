@@ -44,9 +44,8 @@ const sendEmail = async (to, from, subject, text) => {
  * @api {post} /api/submit Submit
  */
 export async function onRequestPost(context) {
-	const ip = request.headers.get('CF-Connecting-IP');
-
     try {
+        let ip = context.request.headers.get('CF-Connecting-IP');
         let input = await context.request.json();
         let { name, email, message } = input;
         let token = input['cf-turnstile-response'];
