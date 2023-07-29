@@ -107,7 +107,10 @@
 
         // Get response JSON
         const json = await response.json();
-        console.log(response, json);
+        if (json.success) {
+            // If successful, hide the form
+            form.style.display = "none";
+        }
 
         // Display response message
         const message = document.getElementById("contact-form-status");
