@@ -64,8 +64,8 @@ export async function onRequestPost(context) {
 
         const url = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
         const formData = new FormData();
-        formData.append('cf-turnstile-response', input['cf-turnstile-response']);
-        formData.append('ip', ip);
+        formData.append('response', input['cf-turnstile-response']);
+        formData.append('remoteip', ip);
         formData.append('secret', '0x4AAAAAAAIAaJowwcIt0oSvMtLqszseMLA');
         const response = await fetch(url, {
             method: 'POST',
@@ -73,7 +73,7 @@ export async function onRequestPost(context) {
         });
         const result = await response.json();
 
-        if (result.success !== true) {
+        if (!result.success) {
             return sendResponse({
                 "success": false,
                 'token': input['cf-turnstile-response'],
