@@ -114,6 +114,9 @@
 
         // Clear form
         form.reset();
+
+        // Show message
+        message.style.display = "block";
     }
 
     window.onload = function() {
