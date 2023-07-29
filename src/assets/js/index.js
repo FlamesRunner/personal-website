@@ -97,7 +97,7 @@
         const data = new FormData(form);
 
         // Send JSON request to /api/submit
-        const response = fetch("/api/submit", {
+        const response = await fetch("/api/submit", {
             method: "POST",
             body: JSON.stringify(Object.fromEntries(data)),
             headers: {
@@ -107,7 +107,7 @@
 
         // Get response JSON
         const json = await response.json();
-        console.log(json);
+        console.log(response, json);
 
         // Display response message
         const message = document.getElementById("contact-form-status");
