@@ -44,7 +44,6 @@ const sendEmail = async (to, from, subject, text) => {
  * @api {post} /api/submit Submit
  */
 export async function onRequestPost(context) {
-    const token = body.get('cf-turnstile-response');
 	const ip = request.headers.get('CF-Connecting-IP');
 
     try {
