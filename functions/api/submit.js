@@ -1,4 +1,4 @@
-import nodemailer from 'nodemailer';
+const sendgridApiKey = 'SG.VgJGSPdPQ3m5qfKgK-GoHw.z8Jr6KgQG5kQ3VVldzKJ8YGvHBIpU5ucS3GccK7HX4c';
 
 const sendResponse = (obj) => {
     return new Response(JSON.stringify(obj), {
@@ -8,17 +8,37 @@ const sendResponse = (obj) => {
     });
 }
 
-const createMailClient = () => {
-    return nodemailer.createTransport({
-      host: "smtp-pulse.com",
-      port: 465,
-      secure: true,
-      auth: {
-        user: "andrew@andrew-hong.me",
-        pass: "meqmav-hyqxem-nypbA0",
-      }
+const sendEmail = async (to, from, subject, text) => {
+    const url = 'https://api.sendgrid.com/v3/mail/send';
+    return fetch(url, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${sendgridApiKey}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            "personalizations": [
+                {
+                    "to": [
+                        {
+                            "email": to
+                        }
+                    ],
+                    "subject": subject
+                }
+            ],
+            "from": {
+                "email": from
+            },
+            "content": [
+                {
+                    "type": "text/plain",
+                    "value": text
+                }
+            ]
+        })
     });
-  }
+}
 
 /**
  * @api {post} /api/submit Submit
@@ -57,13 +77,13 @@ export async function onRequestPost(context) {
         }
 
         // Send email
-        const mailClient = createMailClient();
-        await mailClient.sendMail({
-            from: 'noreply@ahong.ca',
-            to: 'me@ahong.ca',
-            subject: 'New message from ' + name,
-            text: email
-        });
+        const sendgridResponse = await sendEmail('andrew@ahong.ca', 'noreply@ahong.ca', `New message from ahong.ca (${name}, ${email})`, message);
+        if (sendgridResponse.status !== 202) {
+            return sendResponse({
+                "success": false,
+                "message": "Error sending message."
+            });
+        }
 
         return sendResponse({
             "success": true,
