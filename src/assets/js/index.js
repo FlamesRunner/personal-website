@@ -112,11 +112,21 @@
         const message = document.getElementById("contact-form-status");
         message.innerHTML = json.message;
 
-        // Clear form
-        form.reset();
+        if (json.success) {
+            // Clear form
+            form.reset();
+        }
 
         // Show message
         message.style.display = "block";
+
+        // Reset captcha
+        window.turnstile.reset('0x4AAAAAAAIAaGqPmjpXDLyV');
+
+        // Hide message after 5 seconds
+        setTimeout(() => {
+            message.style.display = "none";
+        }, 5000);
     }
 
     window.onload = function() {

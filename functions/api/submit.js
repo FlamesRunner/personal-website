@@ -83,7 +83,8 @@ export async function onRequestPost(context) {
         }
 
         // Send email
-        const sendgridResponse = await sendEmail('andrew@ahong.ca', 'noreply@ahong.ca', `New message from ahong.ca (${name}, ${email})`, message);
+        const sendgridResponse = await sendEmail('andrew@ahong.ca', 'noreply@ahong.ca', `New message from ahong.ca (${name}, ${email})`, 
+            `Name: ${name}\nEmail: ${email}\nMessage: ${message}`);
         if (sendgridResponse.status !== 202) {
             return sendResponse({
                 "success": false,
