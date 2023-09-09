@@ -77,7 +77,7 @@
             const img = gallery_items[i].getElementsByTagName("img")[0];
 
             // Get the src attribute of the img element
-            const src = img.getAttribute("src");
+            const src = img.getAttribute("data-src");
 
             // Set the on-click event of the gallery item to open the image in a new tab
             gallery_items[i].onclick = () => {

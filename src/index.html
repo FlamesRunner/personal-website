@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     <title>Andrew Hong</title>
 </head>
+
 <body>
     <div id="home-section"></div>
     <div class="container">
@@ -39,7 +41,7 @@
                 something new and trying new food.</p>
             <p>I'm always happy to speak with someone new, so please feel free to contact me, whether you're talking
                 business or just want to say hi :&#41;</p>
-            
+
             <div class="separator"></div>
 
             <h3>Ways to reach me</h3>
@@ -58,14 +60,16 @@
 
             <h3>Contact form</h3>
 
-            <p>Alternatively, you can use the form below to contact me. I'll try to get back to you as soon as possible.</p>
+            <p>Alternatively, you can use the form below to contact me. I'll try to get back to you as soon as possible.
+            </p>
 
             <div class="contact-form">
                 <div id="contact-form-status" class="contact-form-status"></div>
                 <form action="/api/submit" id="contact-form">
                     <input class="contact-form-input" type="text" name="name" placeholder="Name" required />
                     <input class="contact-form-input" type="email" name="email" placeholder="Email" required />
-                    <textarea class="contact-form-textarea" for="contact-form" name="message" placeholder="Message" required></textarea>
+                    <textarea class="contact-form-textarea" for="contact-form" name="message" placeholder="Message"
+                        required></textarea>
                     <div class="cf-turnstile" data-sitekey="0x4AAAAAAAIAaGqPmjpXDLyV"></div>
                     <div class="spacer"></div>
                     <input class="contact-form-submit" type="submit" value="Send" />
@@ -75,28 +79,37 @@
             <div class="separator"></div>
 
             <h3>Projects</h3>
-            <p>I've had the opportunity to work on quite a few projects in the past. Soon, there will be a live demo of my 2D/3D renderer I wrote in CSC D18 below:</p>
-            
+            <p>I've had the opportunity to work on quite a few projects in the past. Soon, there will be a live demo of
+                my 2D/3D renderer I wrote in CSC D18 below:</p>
+
             <div class="spacer"></div>
             <canvas id="rt-canvas"></canvas>
 
             <p>... and some other projects I've worked on:</p>
             <ul>
-                <li><a href="https://github.com/FlamesRunner/MCPv2">MCPv2</a> &mdash; An open-source game server control panel with support for remote file-management, power controls and more. It makes use of React, NodeJS, Python + Flask and C++.</li>
-                <li><a href="https://github.com/FlamesRunner/B20A3">Course website</a> &mdash; An open-source course LMS and webpage</li>
-                <li><a href="https://cdn.ahong.ca/ahong.ca/assets/media/ray_tracer.zip">Ray Tracer</a> &mdash; A 2D/3D ray tracer written in C for CSC D18.</li>
+                <li><a href="https://github.com/FlamesRunner/MCPv2">MCPv2</a> &mdash; An open-source game server control
+                    panel with support for remote file-management, power controls and more. It makes use of React,
+                    NodeJS, Python + Flask and C++.</li>
+                <li><a href="https://github.com/FlamesRunner/B20A3">Course website</a> &mdash; An open-source course LMS
+                    and webpage</li>
+                <li><a href="https://cdn.ahong.ca/ahong.ca/assets/media/ray_tracer.zip">Ray Tracer</a> &mdash; A 2D/3D
+                    ray tracer written in C for CSC D18.</li>
             </ul>
 
             <div class="separator"></div>
 
             <h3>Resume</h3>
 
-            <p>Click <a href="https://cdn.ahong.ca/ahong.ca/assets/media/resume.pdf">here</a> to view my resume. If you would like to contact me, please use the information above.</p>
+            <p>Click <a href="https://cdn.ahong.ca/ahong.ca/assets/media/resume.pdf">here</a> to view my resume. If you
+                would like to contact me, please use the information above.</p>
             <p>Highlights:</p>
             <ul>
-                <li>Computer science courses taken out of interest: Computer graphics (CSCD18), social and information networks (CSCC46), web programming (CSCC09, CSCB20), databases (CSCC43), operating systems (CSCC69). The average achieved among these courses is 84.6%.</li>
+                <li>Computer science courses taken out of interest: Computer graphics (CSCD18), social and information
+                    networks (CSCC46), web programming (CSCC09, CSCB20), databases (CSCC43), operating systems (CSCC69).
+                    The average achieved among these courses is 84.6%.</li>
                 <li>I am a Dean's list recipient for 2020 and 2021</li>
-                <li>I have experience with React, NodeJS, Python, C, NodeJS, React, PHP, HTML/CSS/JS, SQL, Linux systems administration and more</li>
+                <li>I have experience with React, NodeJS, Python, C, NodeJS, React, PHP, HTML/CSS/JS, SQL, Linux systems
+                    administration and more</li>
                 <li>I can speak and write in French to the CEFR B1 level</li>
                 <li>Internship at Fortran Traffic Systems Limited in Summer 2022</li>
                 <li>Part-time web developer at Varsity Publications Inc. from January 2021 to April 2024</li>
@@ -111,34 +124,47 @@
 
             <div class="gallery">
                 <div class="gallery-item">
-                    <img src="https://cdn.ahong.ca/ahong.ca/assets/media/gallery/1.jpg" alt="Example render from my ray tracer" />
+                    <img src="https://cdn.ahong.ca/ahong.ca/assets/media/gallery/thumbnails/1.jpg"
+                        data-src="https://cdn.ahong.ca/ahong.ca/assets/media/gallery/1.jpg"
+                        alt="Example render from my ray tracer" />
                     <p class="gallery-item-caption">Example render from my ray tracer</p>
                 </div>
                 <div class="gallery-item">
-                    <img src="https://cdn.ahong.ca/ahong.ca/assets/media/gallery/2.jpg" alt="Mendenhall Glacier, Alaska" />
+                    <img src="https://cdn.ahong.ca/ahong.ca/assets/media/gallery/thumbnails/2.jpg"
+                        data-src="https://cdn.ahong.ca/ahong.ca/assets/media/gallery/2.jpg"
+                        alt="Mendenhall Glacier, Alaska" />
                     <p class="gallery-item-caption">Mendenhall Glacier, Alaska</p>
                 </div>
                 <div class="gallery-item">
-                    <img src="https://cdn.ahong.ca/ahong.ca/assets/media/gallery/3.jpg" alt="Glacier Bay, Alaska" />
+                    <img src="https://cdn.ahong.ca/ahong.ca/assets/media/gallery/thumbnails/3.jpg"
+                        data-src="https://cdn.ahong.ca/ahong.ca/assets/media/gallery/3.jpg" alt="Glacier Bay, Alaska" />
                     <p class="gallery-item-caption">Glacier Bay, Alaska</p>
                 </div>
                 <div class="gallery-item">
-                    <img src="https://cdn.ahong.ca/ahong.ca/assets/media/gallery/4.jpg" alt="Juneau, Alaska" />
+                    <img src="https://cdn.ahong.ca/ahong.ca/assets/media/gallery/thumbnails/4.jpg"
+                        data-src="https://cdn.ahong.ca/ahong.ca/assets/media/gallery/4.jpg" alt="Juneau, Alaska" />
                     <p class="gallery-item-caption">Juneau, Alaska</p>
                 </div>
                 <div class="gallery-item">
-                    <img src="https://cdn.ahong.ca/ahong.ca/assets/media/gallery/5.jpg" alt="Seoul, South Korea - Olympic Park" />
+                    <img src="https://cdn.ahong.ca/ahong.ca/assets/media/gallery/thumbnails/5.jpg"
+                        data-src="https://cdn.ahong.ca/ahong.ca/assets/media/gallery/5.jpg"
+                        alt="Seoul, South Korea - Olympic Park" />
                     <p class="gallery-item-caption">Seoul, South Korea - Olympic Park</p>
                 </div>
             </div>
 
-            <p>When I see another place I've never been to before, I always try to take a picture of it. Of the places I've had the opportunity to see, I personally think Banff National Park in Alberta, Canada, and Glacier Bay in Alaska.</p>
+            <p>When I see another place I've never been to before, I always try to take a picture of it. Of the places
+                I've had the opportunity to see, I personally think Banff National Park in Alberta, Canada, and Glacier
+                Bay in Alaska.</p>
             <p>If I take or find another interesting picture, it'll be posted up here.</p>
 
             <div class="separator"></div>
-            
-            <p class="credit-line">Copyright &copy; 2023 Andrew Hong. All content on this page is my own, with the exception of the CloudFlare Turnstile (CAPTCHA) widget, for which I extend my gratitude to <a href="https://www.cloudflare.com/">CloudFlare</a>.</p>
+
+            <p class="credit-line">Copyright &copy; 2023 Andrew Hong. All content on this page is my own, with the
+                exception of the CloudFlare Turnstile (CAPTCHA) widget, for which I extend my gratitude to <a
+                    href="https://www.cloudflare.com/">CloudFlare</a>.</p>
         </div>
     </div>
 </body>
+
 </html>
