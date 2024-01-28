@@ -1,6 +1,6 @@
 // JS for index.html
 "use strict";
-(function() {
+(function () {
     const objects = [];
 
     let line_length = 200;
@@ -20,7 +20,7 @@
         ctx.fillStyle = "#000000";
         ctx.fillRect(0, 0, width, height);
     }
-    
+
     function init_rt() {
         console.log("Initializing 2D RT");
 
@@ -28,15 +28,17 @@
         var canvas = get_canvas();
         var ctx = canvas.getContext("2d");
 
+        /*
         // Force resize to fit parent element width without exceeding bounds
         canvas.width = canvas.parentElement.clientWidth;
 
         // Set height to 1/2 width
         canvas.height = canvas.width / 2;
+        */
 
         // Draw a rectangle
         clear_background(ctx, canvas.width, canvas.height);
-        
+
         // Reset X
         reset_x();
     }
@@ -113,14 +115,14 @@
         // Display response message
         const message = document.getElementById("contact-form-status");
         message.innerHTML = json.message;
-     
+
         // Show message
         message.style.display = "block";
-        
+
         form.reset();
     }
 
-    window.onload = function() {
+    window.onload = function () {
         init_rt();
         init_gallery();
 
@@ -136,7 +138,7 @@
         window.requestAnimationFrame(trace);
     }
 
-    window.onresize = function() {
+    window.onresize = function () {
         init_rt();
     }
 })();
