@@ -151,6 +151,11 @@ h4 {
     position: relative;
 }
 
+#rt-canvas {
+    width: 100%;
+    height: 50vw;
+}
+
 .header-2-content {
     position: absolute;
     top: -22vh;
