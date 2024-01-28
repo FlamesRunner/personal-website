@@ -28,13 +28,11 @@
         var canvas = get_canvas();
         var ctx = canvas.getContext("2d");
 
-        /*
         // Force resize to fit parent element width without exceeding bounds
         canvas.width = canvas.parentElement.clientWidth;
 
         // Set height to 1/2 width
         canvas.height = canvas.width / 2;
-        */
 
         // Draw a rectangle
         clear_background(ctx, canvas.width, canvas.height);

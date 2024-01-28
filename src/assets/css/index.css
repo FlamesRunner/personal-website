@@ -152,8 +152,7 @@ h4 {
 }
 
 #rt-canvas {
-    width: 100%;
-    height: 35vw;
+    min-height: 28vw;
 }
 
 .header-2-content {
