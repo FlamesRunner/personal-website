@@ -57,13 +57,15 @@ void buildWalls(void)
 
  struct point2D p,d;
  
+int wall_mat = 1;
+
  p.px=W_LEFT;
  p.py=W_TOP;
  d.px=W_RIGHT-W_LEFT;
  d.py=0;
  walls[0].w.p=p;
  walls[0].w.d=d;
- walls[0].material_type=1;		// Change to 0 to make the walls mirror-reflecting!
+ walls[0].material_type=wall_mat;		// Change to 0 to make the walls mirror-reflecting!
  
  p.px=W_RIGHT;
  p.py=W_TOP;
@@ -71,7 +73,7 @@ void buildWalls(void)
  d.py=W_BOTTOM-W_TOP;
  walls[1].w.p=p;
  walls[1].w.d=d;
- walls[1].material_type=1;
+ walls[1].material_type=wall_mat;
 
  p.px=W_RIGHT;
  p.py=W_BOTTOM;
@@ -79,7 +81,7 @@ void buildWalls(void)
  d.py=0;
  walls[2].w.p=p;
  walls[2].w.d=d;
- walls[2].material_type=1;
+ walls[2].material_type=wall_mat;
  
  p.px=W_LEFT;
  p.py=W_BOTTOM;
@@ -87,7 +89,7 @@ void buildWalls(void)
  d.py=W_TOP-W_BOTTOM;
  walls[3].w.p=p;
  walls[3].w.d=d;
- walls[3].material_type=1;
+ walls[3].material_type=wall_mat;
 }
 
 void buildScene(void)
