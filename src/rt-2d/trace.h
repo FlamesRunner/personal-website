@@ -10,11 +10,14 @@ typedef struct Vector {
 typedef struct Ray {
     Vector origin;
     Vector direction;
+    double lambda;
 } Ray;
 
 typedef struct Object {
     Vector centre;
     Vector scale;
+    double rotation;
+    RGB colour;
 
     double (*findIntersection) (Ray *ray, Object *object); // Returns lambda. If no intersection, returns -1
     Vector (*findNormal) (Ray *ray, Object *object); // Returns normal vector. If no intersection, returns NULL
