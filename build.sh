@@ -9,11 +9,17 @@ for VAR in ${ENV_VARS[@]}; do
   fi
 done
 
+# Check if root
+if [ "$EUID" -ne 0 ]; then
+  echo "Please run as root"
+  exit 1
+fi
+
 echo "Generating thumbnails and WEBP images for the gallery..."
 
 # Download mogrify and awscli
-sudo apt-get update -y &> /dev/null
-sudo apt-get install awscli imagemagick -y &> /dev/null
+apt-get update -y &> /dev/null
+apt-get install awscli imagemagick -y &> /dev/null
 
 # Enter the gallery directory
 cd ./src/assets/media/gallery
