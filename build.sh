@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# GitHub Actions build script
+# Root project directory: $PROJECT_DIR
+
 # Check if environment variables are set
 ENV_VARS=("R2_ACCESS_KEY_SECRET" "R2_ACCESS_KEY_ID" "R2_API_URL" "R2_DEFAULT_REGION" "R2_BUCKET_NAME")
 for VAR in ${ENV_VARS[@]}; do
@@ -16,9 +19,11 @@ sudo apt-get update -y &> /dev/null
 sudo apt-get install awscli imagemagick -y &> /dev/null
 
 # Enter the gallery directory
-cd ./src/assets/media/gallery
+#cd ./src/assets/media/gallery
+cd $PROJECT_DIR/src/assets/media/gallery
 
 # Copy the JPG files to the thumbnails directory
+mkdir -p ./thumbnails
 rm -rf ./thumbnails/*
 cp *.jpg ./thumbnails
 
@@ -33,7 +38,7 @@ mogrify -format webp -quality 80 *.jpg
 rm *.jpg
 
 # Return to the top-level directory
-cd ../../../../..
+cd $PROJECT_DIR
 
 echo "Thumbnails and WEBP images generated successfully!"
 
