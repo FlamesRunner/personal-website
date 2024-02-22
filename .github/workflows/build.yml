@@ -22,3 +22,5 @@ jobs:
         R2_API_URL: ${{ secrets.R2_API_URL }}
         R2_DEFAULT_REGION: ${{ secrets.R2_DEFAULT_REGION }}
         R2_BUCKET_NAME: ${{ secrets.R2_BUCKET_NAME }}
+        PROJECT_DIR: ${{ github.workspace }} 
+
