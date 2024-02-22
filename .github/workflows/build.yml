@@ -1,0 +1,23 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Run build script
+      run: ./build.sh
+      env:
+        R2_ACCESS_KEY_SECRET: ${{ secrets.R2_ACCESS_KEY_SECRET }}
+        R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+        R2_API_URL: ${{ secrets.R2_API_URL }}
+        R2_DEFAULT_REGION: ${{ secrets.R2_DEFAULT_REGION }}
+        R2_BUCKET_NAME: ${{ secrets.R2_BUCKET_NAME }}
