@@ -166,11 +166,12 @@ double dist2D(struct point2D *p1, struct point2D *p2)
 void intersectRayWall(struct ray2D *ray, struct point2D *p, struct point2D *n, double *lambda, int *wall_id, int *material)
 {
   struct point2D best_intersection;
+  best_intersection.px = INFINITY;
+  best_intersection.py = INFINITY;
   double best_lambda = INFINITY;
-  int best_wall_id = -1;
-  int best_material = -1;
+  double best_distance = INFINITY;
 
-  for (u_int32_t i = 0; i < 4; i++)
+  for (int i = 0; i < 4; i++)
   {
     struct ray2D wall = walls[i].w;
     struct point2D wall_p = wall.p;
@@ -182,38 +183,30 @@ void intersectRayWall(struct ray2D *ray, struct point2D *p, struct point2D *n, d
     double x[2];
     solve2By2Matrix(A, b, x);
 
-    if (x[0] < TOL || x[0] > 1 - TOL || x[1] < TOL || x[1] > 1 - TOL)
+    if (x[0] < 0 || x[0] > 1 || x[1] < 0 || x[1] > 1)
     {
       continue;
     }
 
-    double lambda = x[1];
-    struct point2D poi;
-    computePointOnLine(&wall, lambda, &poi);
+    double lambda = x[0];
+    double distance = dist2D(&ray->p, &wall_p);
 
-    if (!(poi.px > W_LEFT - TOL && poi.px < W_RIGHT + TOL && poi.py > W_TOP - TOL && poi.py < W_BOTTOM + TOL))
+    if (distance < best_distance)
     {
-      continue;
-    }
-
-    double dist = dist2D(&poi, &ray->p);
-
-    if (dist < best_lambda)
-    {
-      best_intersection = poi;
-      best_lambda = dist;
-      best_wall_id = i;
-      best_material = walls[i].material_type;
+      best_distance = distance;
+      best_lambda = lambda;
+      best_intersection.px = ray->p.px + lambda * ray->d.px;
+      best_intersection.py = ray->p.py + lambda * ray->d.py;
+      *wall_id = i;
+      *material = walls[i].material_type;
     }
   }
 
   *p = best_intersection;
   *lambda = best_lambda;
-  *wall_id = best_wall_id;
-  *material = best_material;
 
   // Compute normal
-  struct ray2D wall = walls[best_wall_id].w;
+  struct ray2D wall = walls[*wall_id].w;
   struct point2D wall_d = wall.d;
   n->px = -wall_d.py;
   n->py = wall_d.px;
