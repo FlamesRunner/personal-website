@@ -2,4 +2,5 @@
 
 #g++ -g -O3 light2D.c -lm -o light2D
 # Use the line below to compile your code *wuth* multithreading for fast rendering of high-quality images
-g++ -g -O3 -fopenmp light2D.c -lm -o light2D
+#/usr/lib/aomp/bin/clang -O3 -v -fopenmp -fopenmp-targets=amdgcn-amd-amdhsa -Xopenmp-target=amdgcn-amd-amdhsa -march=gfx900 light2D.c -lm -o light2D 
+g++ -O3 -fopenmp -march=native light2D.c -lm -o light2D
