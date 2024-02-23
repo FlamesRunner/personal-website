@@ -20,6 +20,6 @@ void propagateRay(struct ray2D *ray, int depth);  // Carries out the propagation
 // The function below finds the intersection between a ray and objects/walls in the scene,
 // then it returns the *closest* intersection point in p, the normal at the intersection
 // in n, the value of lambda at the intersection, and the object's material type.
-void intersectRay(struct ray2D *ray, struct point2D *p, struct point2D *n, double *lambda, int *type, double *r_idx);
+void intersectRay(struct ray2D *ray, struct point2D *p, struct point2D *n, double *lambda, int *type, double *r_idx, double *R, double *G, double *B);
 
 #endif

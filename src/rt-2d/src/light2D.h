@@ -17,7 +17,8 @@
 #include<math.h>
 
 #define PI 3.1415926535
-#define TOL .00000001	
+#define TOL .00000001
+#define CORNER_TOL 0.0001
 #define MAX_OBJECTS 25
 
 /*****************************************************************************************************
@@ -49,6 +50,7 @@ struct circ2D{					// Simple 2D objects (circles in this case)
 			//   1 - Scattering
 			//   2 - Refracting (transparent)
   double r_idx;		// Index of refraction for transparent materials
+  double R, G, B; // Colour of the object
 };
 
 struct wall2D{					// Walls in 2D
@@ -94,7 +96,7 @@ void setPixel(double x, double y, double R, double G, double B);	// Set image pi
 									// specified colour.
 double dot(struct point2D *p, struct point2D *q);	// Dot product between vectors p and q 
 void normalize(struct point2D *d);			// Normalize a vector to unit length
-void addCirc(struct point2D *c, double r, int type, double n);	// Inserts a circle into the objects array
+void addCirc(struct point2D *c, double r, int type, double n, double R, double G, double B);	// Inserts a circle into the objects array
 void buildWalls(void);		// This function makes the walls of the box. Implemented in buildScene.c
 void buildScene(void);		// This creates the list of objects and sets up the
 				// light source. Implemented in buildScene.c, so you can

@@ -25,7 +25,8 @@
  * Uncomment the #define below to enable debug code, add whatever you need
  * to help you debug your program between #ifdef - #endif blocks
  * ************************************************************************/
-#define __DEBUG_MODE
+// #define __DEBUG_MODE
+#include "light2D.h"
 
 /**
  * @brief Dot product
@@ -77,6 +78,20 @@ void vectorScale(struct point2D *v, double factor, struct point2D *result)
 }
 
 /**
+ * @brief Rotates a 2D point by some number of radians.
+ *
+ * @param point 2D point
+ * @param radians Radians to rotate by
+ */
+void rotate2DPoint(struct point2D *point, double radians)
+{
+  double new_px = point->px * cos(radians) - point->py * sin(radians);
+  double new_py = point->py * cos(radians) + point->px * sin(radians);
+  point->px = new_px;
+  point->py = new_py;
+}
+
+/**
  * @brief Computes point on a ray.
  *
  * @param ray Ray object
@@ -87,6 +102,24 @@ void computePointOnLine(struct ray2D *ray, double lambda, struct point2D *result
 {
   result->px = ray->p.px + ray->d.px * lambda;
   result->py = ray->p.py + ray->d.py * lambda;
+}
+
+/**
+ * @brief Get the angle between the two rays, assuming
+ * that the two lines originate from the same point and
+ * are not parallel.
+ *
+ * @param ln1 First line
+ * @param ln2 Second line
+ * @return Angle
+ */
+double getAngleBetweenLines(struct ray2D *ln1, struct ray2D *ln2)
+{
+  double dot_product = ln1->d.px * ln2->d.px + ln1->d.py * ln2->d.py;
+  double ln1_magnitude = ln1->d.px * ln1->d.px + ln1->d.py * ln1->d.py;
+  double ln2_magnitude = ln2->d.px * ln2->d.px + ln2->d.py * ln2->d.py;
+  double angle = acos(dot_product * (ln1_magnitude * ln2_magnitude));
+  return angle;
 }
 
 /**
@@ -151,66 +184,154 @@ double dist2D(struct point2D *p1, struct point2D *p2)
   return sqrt(x_component * x_component + y_component * y_component);
 }
 
+struct point2D getWallNormal(int wall_idx)
+{
+  struct point2D n1;
+  switch (wall_idx)
+  {
+  case 0:
+    n1.px = 0.0;
+    n1.py = 1.0;
+    break;
+  case 1:
+    n1.px = -1.0;
+    n1.py = 0.0;
+    break;
+  case 2:
+    n1.px = 0.0;
+    n1.py = -1.0;
+    break;
+  case 3:
+    n1.px = 1.0;
+    n1.py = 0.0;
+    break;
+  }
+
+  return n1;
+}
+
 /**
  * @brief Attempts to find the closest wall intn. The function is guaranteed to return
  * a valid result, and will set the POI, the normal of the intersected wall, the lambda
  * value, the wall's ID and the material type. Uses distance to determine the closest
  * wall.
  *
+ * If the function detects a corner intersection, it will return the average of
+ * the two normals given by the intersecting walls. It will also choose a wall ID
+ * and material type at random.
+ *
  * @param ray Ray to intersect against wall
  * @param p Point of intersection. In cases of error, can be (inf, inf).
  * @param n  Normal vector.
  * @param lambda Lambda value of wall ray.
  * @param wall_id Wall ID relative to walls array.
+ * @param material_type Material type of wall.
  */
-void intersectRayWall(struct ray2D *ray, struct point2D *p, struct point2D *n, double *lambda, int *wall_id, int *material)
+void intersectRayWall(struct ray2D *ray, struct point2D *p, struct point2D *n, double *lambda, int *wall_id, int *material_type)
 {
-  struct point2D best_intersection;
-  best_intersection.px = INFINITY;
-  best_intersection.py = INFINITY;
-  double best_lambda = INFINITY;
-  double best_distance = INFINITY;
+  struct point2D closest_poi;
+  double closest_dist = INFINITY;
+  double wall_lambda = 0.0;
+  int has_found_point = 0;
 
-  for (int i = 0; i < 4; i++)
+  // Set default
+  closest_poi.px = INFINITY;
+  closest_poi.py = INFINITY;
+
+  for (int wall_idx = 0; wall_idx < 4; wall_idx++)
   {
-    struct ray2D wall = walls[i].w;
-    struct point2D wall_p = wall.p;
-    struct point2D wall_d = wall.d;
+    struct ray2D wall_ray = walls[wall_idx].w;
+    double coeff[4] = {ray->d.px, -1.0 * wall_ray.d.px, ray->d.py, -1.0 * wall_ray.d.py};
+    double b[2] = {wall_ray.p.px - ray->p.px, wall_ray.p.py - ray->p.py};
+    double solutions[2];
+    solve2By2Matrix(coeff, b, solutions);
 
-    double A[4] = {ray->d.px, -wall_d.px, ray->d.py, -wall_d.py};
-    double b[2] = {wall_p.px - ray->p.px, wall_p.py - ray->p.py};
-
-    double x[2];
-    solve2By2Matrix(A, b, x);
-
-    if (x[0] < 0 || x[0] > 1 || x[1] < 0 || x[1] > 1)
+    // Ensure lambda from ray is positive
+    // solutions[0] is the lambda for the ray, solutions[1] is the lambda for the wall
+    if (solutions[0] < TOL || solutions[1] > 1 - TOL)
     {
       continue;
     }
 
-    double lambda = x[0];
-    double distance = dist2D(&ray->p, &wall_p);
+    struct point2D poi;
+    computePointOnLine(ray, solutions[0], &poi);
 
-    if (distance < best_distance)
+    double current_dist = dist2D(&poi, &ray->p);
+
+    if (current_dist < closest_dist)
     {
-      best_distance = distance;
-      best_lambda = lambda;
-      best_intersection.px = ray->p.px + lambda * ray->d.px;
-      best_intersection.py = ray->p.py + lambda * ray->d.py;
-      *wall_id = i;
-      *material = walls[i].material_type;
+      closest_dist = current_dist;
+      closest_poi = poi;
+      wall_lambda = solutions[1];
+      *wall_id = wall_idx;
+      has_found_point = 1;
+      *material_type = walls[wall_idx].material_type;
+    }
+
+    if (current_dist < TOL)
+    {
+      // Potential corner intersection
+      struct point2D current_wall_p = wall_ray.p;
+      struct point2D next_wall_p = walls[(wall_idx + 1) % 4].w.p;
+      struct point2D prev_wall_p = walls[(wall_idx + 3) % 4].w.p;
+
+      if (dist2D(&current_wall_p, &closest_poi) < TOL && dist2D(&next_wall_p, &closest_poi) < TOL)
+      {
+        // Force normal to be average of the two normals
+        struct point2D n1 = getWallNormal(wall_idx);
+        struct point2D n2 = getWallNormal((wall_idx + 1) % 4);
+        n->px = (n1.px + n2.px) / 2.0;
+        n->py = (n1.py + n2.py) / 2.0;
+        *lambda = wall_lambda;
+        *p = closest_poi;
+
+        // Randomly choose wall ID of the two walls
+        int wall_choices[2] = {wall_idx, (wall_idx + 1) % 4};
+        *wall_id = wall_choices[rand() % 2];
+        *material_type = walls[*wall_id].material_type;
+
+        // Perturb the point slightly
+        p->px += (rand() / (RAND_MAX / 0.01)) - 0.005;
+        p->py += (rand() / (RAND_MAX / 0.01)) - 0.005;
+
+        // Perturb the lambda slightly
+        *lambda += (rand() / (RAND_MAX / 0.01)) - 0.005;
+        return;
+      }
+      else if (dist2D(&current_wall_p, &closest_poi) < TOL && dist2D(&prev_wall_p, &closest_poi) < TOL)
+      {
+        // Force normal to be average of the two normals
+        struct point2D n1 = getWallNormal(wall_idx);
+        struct point2D n2 = getWallNormal((wall_idx + 3) % 4);
+        n->px = (n1.px + n2.px) / 2.0;
+        n->py = (n1.py + n2.py) / 2.0;
+        *lambda = wall_lambda;
+        *p = closest_poi;
+
+        // Randomly choose wall ID of the two walls
+        int wall_choices[2] = {wall_idx, (wall_idx + 3) % 4};
+        *wall_id = wall_choices[rand() % 2];
+        *material_type = walls[*wall_id].material_type;
+
+        // Perturb the point slightly
+        p->px += (rand() / (RAND_MAX / 0.01)) - 0.005;
+        p->py += (rand() / (RAND_MAX / 0.01)) - 0.005;
+
+        // Perturb the lambda slightly
+        *lambda += (rand() / (RAND_MAX / 0.01)) - 0.005;
+        return;
+      }
     }
   }
 
-  *p = best_intersection;
-  *lambda = best_lambda;
+  // If a point was found, use the convention [TOP, RIGHT, BOTTOM, LEFT] to get normal
+  if (has_found_point == 1)
+  {
+    *n = getWallNormal(*wall_id);
+  }
 
-  // Compute normal
-  struct ray2D wall = walls[*wall_id].w;
-  struct point2D wall_d = wall.d;
-  n->px = -wall_d.py;
-  n->py = wall_d.px;
-  normalize(n);
+  *lambda = wall_lambda;
+  *p = closest_poi;
 }
 
 struct ray2D makeLightSourceRay(void)
@@ -239,12 +360,13 @@ struct ray2D makeLightSourceRay(void)
   ray.p.py = lightsource.l.p.py;
 
   double rayDirX, rayDirY = 0.0;
-
+  double ptAngle = (rand() / (RAND_MAX / 360.0)) * PI / 180.0;
   switch (lightsource.light_type)
   {
-  case 0: // point light source
-    rayDirX = rand() / (RAND_MAX / 2.0) - 1.0;
-    rayDirY = rand() / (RAND_MAX / 2.0) - 1.0;
+  case 0: // point light source; get random direction
+
+    rayDirX = cos(ptAngle);
+    rayDirY = sin(ptAngle);
     break;
   case 1: // laser light source
     rayDirX = lightsource.l.d.px;
@@ -274,6 +396,9 @@ void propagateRay(struct ray2D *ray, int depth)
       best_intersection,
       best_normal;
   double best_lambda = 1e6; // Initialize to a large value
+  double R = 1;
+  double G = 1;
+  double B = 1;
   int material_type;
   int wall_id;
   intersectRayWall(ray, &best_intersection, &best_normal, &best_lambda, &wall_id, &material_type);
@@ -289,19 +414,13 @@ void propagateRay(struct ray2D *ray, int depth)
   double intersect_lambda = INFINITY;
   int intersect_mat_type;
   double intersect_r_idx;
-  intersectRay(ray, &intersect_p, &intersect_n, &intersect_lambda, &intersect_mat_type, &intersect_r_idx);
+  double intersect_R, intersect_G, intersect_B;
+  intersectRay(ray, &intersect_p, &intersect_n, &intersect_lambda, &intersect_mat_type, &intersect_r_idx, &intersect_R, &intersect_G, &intersect_B);
 
   // Step 3 - Check whether the closest intersection with objects is closer than the
   //          closest intersection with a wall. Choose whichever is closer.
   double dist_wall = dist2D(&best_intersection, &ray->p);
   double dist_obj = dist2D(&intersect_p, &ray->p);
-
-  if (depth == 11)
-  {
-    // print intersection points
-    printf("Wall intersection point: (%lf, %lf)\n", best_intersection.px, best_intersection.py);
-    printf("Object intersection point: (%lf, %lf)\n", intersect_p.px, intersect_p.py);
-  }
 
   // Ensure intersect_lambda is within [0, 1] and that it is closer than the wall
   if (intersect_lambda > 0 && dist_obj < dist_wall)
@@ -310,6 +429,9 @@ void propagateRay(struct ray2D *ray, int depth)
     best_normal = intersect_n;
     best_lambda = intersect_lambda;
     material_type = intersect_mat_type;
+    R = intersect_R;
+    G = intersect_G;
+    B = intersect_B;
   }
 
 // Print the closest intersection point
@@ -330,7 +452,25 @@ void propagateRay(struct ray2D *ray, int depth)
   //          ray from the origin to the intersection). You also need to provide the
   //          ray's colour.
 
+  if (fabs(ray->p.px) + fabs(ray->p.py) > fabs(W_LEFT) + fabs(W_TOP) - CORNER_TOL)
+  {
+    // We ignore the ray, as we are in a corner
+    return;
+  }
+
+  if (fabs(best_intersection.px) + fabs(best_intersection.py) > fabs(W_LEFT) + fabs(W_TOP) - CORNER_TOL)
+  {
+    // We ignore the ray, as the intersection is invalid (corner case likely)
+    return;
+  }
+
   renderRay(&ray->p, &best_intersection, ray->R, ray->G, ray->B);
+
+  if (ray->inside_out == 1)
+  {
+    best_normal.px *= -1.0;
+    best_normal.py *= -1.0;
+  }
 
   // Step 5 - Decide how to handle the ray's bounce at the intersection. You will have
   //          to provide code for 3 cases:
@@ -386,39 +526,26 @@ void propagateRay(struct ray2D *ray, int depth)
     reflected_ray->d = reflected_ray_dir;
     reflected_ray->inside_out = ray->inside_out;
     reflected_ray->monochromatic = ray->monochromatic;
-    reflected_ray->R = ray->R;
-    reflected_ray->G = ray->G;
-    reflected_ray->B = ray->B;
+    reflected_ray->R = ray->R * R;
+    reflected_ray->G = ray->G * G;
+    reflected_ray->B = ray->B * B;
 
     // Normalize
     normalize(&reflected_ray->d);
 
-    // Print reflected ray
-    printf("Reflected ray: (%lf, %lf)\n", reflected_ray->d.px, reflected_ray->d.py);
-
     propagateRay(reflected_ray, depth + 1);
+
+    // Free memory
+    free(reflected_ray);
   }
   else if (material_type == 1)
   {
-    // // Handle scattering
-    // double angle = (rand() / (RAND_MAX / 180.0)) - 90.0;
-    // struct point2D scattered_ray_dir;
-    // vectorRotate(&best_normal, angle, &scattered_ray_dir);
+    // Handle scattering. Ensure that this does not
+    // enter an object
 
-    // struct ray2D scattered_ray;
-    // scattered_ray.p = best_intersection;
-    // scattered_ray.d = scattered_ray_dir;
-    // scattered_ray.inside_out = ray->inside_out;
-    // scattered_ray.monochromatic = ray->monochromatic;
-    // scattered_ray.R = ray->R;
-    // scattered_ray.G = ray->G;
-    // scattered_ray.B = ray->B;
-
-    // propagateRay(&scattered_ray, depth + 1);
-
-    // Handle scattering
-    double angle = (rand() / (RAND_MAX / 180.0)) - 90.0;
     struct point2D scattered_ray_dir;
+    double angle = (rand() / (RAND_MAX / 180.0)) - 90.0;
+    angle = angle * PI / 180.0;
     vectorRotate(&best_normal, angle, &scattered_ray_dir);
 
     struct ray2D *scattered_ray = (struct ray2D *)malloc(sizeof(struct ray2D));
@@ -426,61 +553,91 @@ void propagateRay(struct ray2D *ray, int depth)
     scattered_ray->d = scattered_ray_dir;
     scattered_ray->inside_out = ray->inside_out;
     scattered_ray->monochromatic = ray->monochromatic;
-    scattered_ray->R = ray->R;
-    scattered_ray->G = ray->G;
-    scattered_ray->B = ray->B;
+    scattered_ray->R = ray->R * R;
+    scattered_ray->G = ray->G * G;
+    scattered_ray->B = ray->B * B;
 
     // Normalize
     normalize(&scattered_ray->d);
 
     propagateRay(scattered_ray, depth + 1);
+
+    // Free memory
+    free(scattered_ray);
+  }
+  else if (material_type == 2)
+  {
+    // Case 2 can only occur with objects (refracting)
+    struct ray2D *reflected_ray = (struct ray2D *)malloc(sizeof(struct ray2D));
+    double n1, n2, r0, r_theta, r_transmitted;
+
+    // Figure out angle
+    struct ray2D normal_ray;
+    normal_ray.p = best_intersection;
+    normal_ray.d = best_normal;
+
+    struct ray2D reversed_ray;
+    reversed_ray.p = best_intersection;
+    reversed_ray.d.px = ray->d.px * -1.0;
+    reversed_ray.d.py = ray->d.py * -1.0;
+    normalize(&reversed_ray.d);
+
+    double angle_between_normal = getAngleBetweenLines(&normal_ray, &reversed_ray);
+    if (ray->inside_out == 1)
+    { // In object
+      n1 = intersect_r_idx;
+      n2 = 1.0;
+      normal_ray.d.px *= -1.0;
+      normal_ray.d.py *= -1.0;
+    }
+    else
+    { // In air
+      n1 = 1.0;
+      n2 = intersect_r_idx;
+    }
+
+    r0 = pow((n1 - n2) / (n1 + n2), 2);
+    r_theta = r0 + (1 - r0) * pow((1.0 - fabs(cos(angle_between_normal))), 5);
+    r_transmitted = 1.0 - r_theta;
+    double refracted_angle = asin((n1 * sin(angle_between_normal)) / n2);
+
+    // Create refracted ray
+    struct ray2D *refracted_ray = (struct ray2D *)calloc(1, sizeof(struct ray2D));
+    refracted_ray->p = best_intersection;
+    refracted_ray->d.px = best_normal.px * -1.0;
+    refracted_ray->d.py = best_normal.py * -1.0;
+    refracted_ray->inside_out = (ray->inside_out == 1) ? 0 : 1;
+
+    rotate2DPoint(&refracted_ray->d, refracted_angle);
+
+    refracted_ray->R = ray->R * r_transmitted * R;
+    refracted_ray->G = ray->G * r_transmitted * G;
+    refracted_ray->B = ray->B * r_transmitted * B;
+
+    // Create mirror-direction ray
+    double dot_product = ray->d.px * best_normal.px + ray->d.py * best_normal.py;
+    reflected_ray->d.px = -2.0 * dot_product * best_normal.px + ray->d.px;
+    reflected_ray->d.py = -2.0 * dot_product * best_normal.py + ray->d.py;
+    reflected_ray->R *= r_theta * R;
+    reflected_ray->G *= r_theta * G;
+    reflected_ray->B *= r_theta * B;
+
+    // Optimization in case we have light rays that are black
+    if (refracted_ray->R > TOL && refracted_ray->G > TOL && refracted_ray->B > TOL)
+    {
+      propagateRay(refracted_ray, depth + 1);
+    }
+    free(refracted_ray);
+    free(reflected_ray);
   }
 }
 
-void intersectRay(struct ray2D *ray, struct point2D *p, struct point2D *n, double *lambda, int *type, double *r_idx)
+void intersectRay(struct ray2D *ray, struct point2D *p, struct point2D *n, double *lambda, int *type, double *r_idx, double *Rv, double *Gv, double *Bv)
 {
   /*
    This function checks for intersection between the ray and any objects in the objects
    array. The objects are circles, so we are in fact solving for the intersection
    between a ray and a circle.
-
-   For a unit circle centered at the origin, we would have the equation
-
-   x^2 + y^2 = 1
-
-   Using vector notation, with C=[x y]', we get
-
-   ||C||^2 = 1
-
-   A point on the ray is given by p + lambda*d
-
-   Substituting in the equation for the circle we have
-
-   (p + lambda*d)(p + lambda*d) - 1 = 0
-
-   If we expand the product above (here the product of two vectors is a DOT product),
-   we can form a quadratic equation
-
-   A*lambda^2 + B*lambda + C = 0
-
-   Which as you know, has a very simple solution.
-
-   Your task is to
-   * Figure out A, B, and C, considering that your circles don't necessarily have r=1
-   * Figure out how to deal with the fact that circles in the scene are likely
-     *not* centered at the origin
-
-   Then implement the code that will find the value(s) of lambda at the intersection(s).
-
-   Note that you can have no intersections, 1 intersection, or 2 intersections
-
-   This function *must* find the closest intersection (if any) and update the value
-   of lambda, the intersection point p, the normal n at the intersection,
-   the corresponding object's material type (needed outside here to figure out how
-   to handle the light's bouncing off this object), and the index of refraction for
-   the object (needed if this is a transparent object).
-
-   You must make sure that n is a unit-length vector.
   */
 
   struct circ2D closest_object;
@@ -520,7 +677,7 @@ void intersectRay(struct ray2D *ray, struct point2D *p, struct point2D *n, doubl
     struct point2D poi;
     for (u_int32_t j = 0; j < solution_count; j++)
     {
-      if (solution[j] < TOL)
+      if (solution[j] <= TOL)
       {
         continue;
       }
@@ -543,6 +700,11 @@ void intersectRay(struct ray2D *ray, struct point2D *p, struct point2D *n, doubl
         closest_object_distance = dist;
         ray_lambda = solution[j];
         has_found_point = 1;
+
+        // Set the colour
+        *(Rv) = closest_object.R;
+        *(Gv) = closest_object.G;
+        *(Bv) = closest_object.B;
       }
     }
   }
