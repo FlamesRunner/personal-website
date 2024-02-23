@@ -301,7 +301,7 @@ void normalize(struct point2D *d)
   }
 }
 
-void addCirc(struct point2D *c, double r, int type, double r_idx)
+void addCirc(struct point2D *c, double r, int type, double r_idx, double R, double G, double B)
 {
   // This adds an object to the object array. Parameters specify
   // the circle's center c, the radius r, type of material, and
@@ -317,6 +317,9 @@ void addCirc(struct point2D *c, double r, int type, double r_idx)
   objects[num_obj].r = r;
   objects[num_obj].material_type = type;
   objects[num_obj].r_idx = r_idx;
+  objects[num_obj].R = R;
+  objects[num_obj].G = G;
+  objects[num_obj].B = B;
   num_obj++;
 }
 
@@ -326,6 +329,8 @@ int main(int argc, char *argv[])
   struct point2D p, d;
   double mx, mi, rng;
   FILE *f;
+
+  srand(time(NULL)); // Seed the random number generator
 
   // Parse command line arguments and validate their range
   if (argc < 5)
