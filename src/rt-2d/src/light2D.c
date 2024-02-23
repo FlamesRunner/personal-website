@@ -62,6 +62,10 @@
 #include "rays2D.h"
 #include "rays2D.c"
 
+#ifdef _OPENMP
+#include <omp.h>
+#endif
+
 // Let's get some work done!
 
 void hue2RGB(double H, double *R, double *G, double *B)
@@ -382,10 +386,10 @@ int main(int argc, char *argv[])
   w_x = (W_RIGHT - W_LEFT);
   w_y = (W_BOTTOM - W_TOP);
 
-  // READY - The loop below will generate rays in a way that suits the type of lightsource
-  // defined in buildScene.c, and will initiate the propagation process.
+// READY - The loop below will generate rays in a way that suits the type of lightsource
+// defined in buildScene.c, and will initiate the propagation process.
 
-#pragma omp parallel for schedule(dynamic, 32) private(ray)
+#pragma omp target parallel for schedule(dynamic, 32) private(ray) shared(num_rays) shared(max_depth) shared(imRGB) shared(sx) shared(sy)
   for (int i = 0; i < num_rays; i++)
   {
     if (num_rays > 10)

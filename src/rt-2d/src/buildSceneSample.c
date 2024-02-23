@@ -124,8 +124,8 @@ void buildScene(void)
   // c.py = 0.0800;
   // addCirc(&c, 0.1, 2, 2, 0.9, 0.9, 0.9);
 
-  p.px = 0.1940591452551993;
-  p.py = -0.048384379119933575;
+  p.px = ${LIGHT_X};
+  p.py = ${LIGHT_Y};
   d.px = -0.9410;
   d.py = 0.3383;
   normalize(&d);
