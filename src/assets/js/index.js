@@ -121,7 +121,7 @@
     }
 
     window.onload = function () {
-        init_rt();
+        // init_rt();
         init_gallery();
 
         // Add event listener to contact form
