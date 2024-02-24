@@ -2,13 +2,19 @@ from math import cos, sin, pi
 import os
 import sys
 
-head_start = 148
+head_start = 0
+limit = 360
 
-for angle in range(head_start, 360, 1):
-    # Use angle to take points on a circle with radius 0.1
+def sample_point_on_circle(radius, angle):
     rads = angle * pi / 180
-    x = cos(rads) * 0.2
-    y = sin(rads) * 0.2
+    x = cos(rads) * radius
+    y = sin(rads) * radius
+    return (x, y)
+
+for angle in range(head_start, limit + 1, 1):
+    # Use angle to take points on a circle with radius 0.1
+    x, y = sample_point_on_circle(0.3, angle)
+    print(f'x: {x}, y: {y}')
 
     # Open buildSceneSample.c to read
     f = open('buildSceneSample.c', 'r')
@@ -34,9 +40,9 @@ for angle in range(head_start, 360, 1):
     # Run the following: ./light2D 1024 1024 5000000 25
     # Make sure the process finishes before continuing to the next iteration
     # Redirect stdout to /dev/null to suppress output
-    os.system('./light2D 1024 1024 2500000 25 > /dev/null')
+    os.system('./light2D 1024 1024 250000 25 > /dev/null')
 
-    # Convert light2D_output.ppm to generated_images/animation_{seq_num}.png
-    os.system(f'convert light2D_output.ppm generated_images/animation_{angle}.png')
+    # Convert light2D_output.ppm to generated_images/000.png, 001.png, 002.png, ...
+    os.system(f'convert light2D_output.ppm generated_images/{angle:03d}.png')
 
     print(f'Generated image {angle} of 360')
