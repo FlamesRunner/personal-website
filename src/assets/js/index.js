@@ -157,8 +157,10 @@
 
             // Spool up the modal (remove hidden class)
             modal.classList.remove("gallery-modal-invisible");
-            modal.classList.remove("gallery-modal-hidden");
-            modal.classList.add("gallery-modal");
+            setTimeout(() => {
+                modal.classList.remove("gallery-modal-hidden");
+                modal.classList.add("gallery-modal");
+            }, 100);
         }
 
         return gallery_item_click_helper(event);
