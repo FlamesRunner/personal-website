@@ -1,4 +1,4 @@
-const sendgridApiKey = 'SG.VgJGSPdPQ3m5qfKgK-GoHw.z8Jr6KgQG5kQ3VVldzKJ8YGvHBIpU5ucS3GccK7HX4c';
+const sendgridApiKey = env.sendgrid_api_key; // Defined as a secret in CF pages
 
 const sendResponse = (obj) => {
     return new Response(JSON.stringify(obj), {
@@ -66,7 +66,7 @@ export async function onRequestPost(context) {
         const formData = new FormData();
         formData.append('response', input['cf-turnstile-response']);
         formData.append('remoteip', ip);
-        formData.append('secret', '0x4AAAAAAAIAaJowwcIt0oSvMtLqszseMLA');
+        formData.append('secret', env.turnstile_secret_key);
         const response = await fetch(url, {
             method: 'POST',
             body: formData
