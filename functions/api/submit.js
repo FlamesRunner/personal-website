@@ -1,5 +1,3 @@
-const sendgridApiKey = env.sendgrid_api_key; // Defined as a secret in CF pages
-
 const sendResponse = (obj) => {
     return new Response(JSON.stringify(obj), {
         headers: {
@@ -8,12 +6,12 @@ const sendResponse = (obj) => {
     });
 }
 
-const sendEmail = async (to, from, subject, text) => {
+const sendEmail = async (to, from, subject, text, apiKey) => {
     const url = 'https://api.sendgrid.com/v3/mail/send';
     return fetch(url, {
         method: 'POST',
         headers: {
-            'Authorization': `Bearer ${sendgridApiKey}`,
+            'Authorization': `Bearer ${apiKey}`,
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
@@ -85,7 +83,7 @@ export async function onRequestPost(context) {
 
         // Send email
         const sendgridResponse = await sendEmail('andrew@ahong.ca', 'noreply@ahong.ca', `New message from ahong.ca (${name}, ${email})`, 
-            `Name: ${name}\nEmail: ${email}\nMessage: ${message}`);
+            `Name: ${name}\nEmail: ${email}\nMessage: ${message}`, env.sendgrid_api_key);
         if (sendgridResponse.status !== 202) {
             return sendResponse({
                 "success": false,
