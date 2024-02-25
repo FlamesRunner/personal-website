@@ -203,7 +203,16 @@
         year.innerHTML = new Date().getFullYear();
 
         // Start interval
-        window.requestAnimationFrame(trace);
+        // window.requestAnimationFrame(trace);
+
+        // Add window click event listener
+        window.addEventListener("click", (event) => {
+            // If the video with id rt-video is not playing, play it
+            const video = document.getElementById("rt-video");
+            if (video.paused) {
+                video.play();
+            }
+        });
     }
 
     window.onresize = function () {
