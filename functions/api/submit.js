@@ -47,6 +47,7 @@ export async function onRequestPost(context) {
     try {
         let ip = context.request.headers.get('CF-Connecting-IP');
         let input = await context.request.json();
+        let env = context.env;
         let { name, email, message } = input;
         if (!name || !email || !message) {
             return sendResponse({
