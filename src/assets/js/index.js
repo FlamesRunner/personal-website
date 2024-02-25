@@ -156,6 +156,7 @@
             modal_img_container.style.backgroundImage = `url(${src})`;
 
             // Spool up the modal (remove hidden class)
+            modal.classList.remove("gallery-modal-invisible");
             modal.classList.remove("gallery-modal-hidden");
             modal.classList.add("gallery-modal");
         }
@@ -170,6 +171,9 @@
         gallery_modal_close.onclick = () => {
             gallery_modal.classList.add("gallery-modal-hidden");
             gallery_modal.classList.remove("gallery-modal");
+            setTimeout(() => {
+                gallery_modal.classList.add("gallery-modal-invisible");
+            }, 200);
         }
     }
 
