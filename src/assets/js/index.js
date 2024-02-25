@@ -78,11 +78,6 @@
 
             // Get the src attribute of the img element
             const src = img.getAttribute("data-src");
-
-            // Set the on-click event of the gallery item to open the image in a new tab
-            gallery_items[i].onclick = () => {
-                window.open(src, "_blank");
-            }
         }
     }
 
@@ -120,9 +115,78 @@
         form.reset();
     }
 
+    const gallery_item_click = (event, galleryModalId) => {
+        const gallery_item_click_helper = (event) => {
+            // Get modal and modal image
+            const modal = document.getElementById(galleryModalId);
+            const modal_img = modal.getElementsByClassName("gallery-modal-image")[0];
+            const modal_caption = modal.getElementsByClassName("gallery-modal-caption")[0];
+            
+            console.log(event);
+            console.log(event.srcElement);
+
+            let src, alt, caption;
+            // Set caption to gallery-item-caption innerHTML
+            if (event.srcElement.tagName === "IMG") {
+                // If the event target is the img, set the src of the modal img to the src of the clicked img
+                src = event.srcElement.getAttribute("data-src");
+                alt = event.srcElement.alt;
+                caption = event.srcElement.parentElement.getElementsByClassName("gallery-item-caption")[0].innerHTML;
+            } else if (event.srcElement.tagName === "DIV") {
+                // If the event target is the div, set the src of the modal img to the src of the img inside the div
+                src = event.srcElement.getElementsByTagName("img")[0].getAttribute("data-src");
+                alt = event.srcElement.getElementsByTagName("img")[0].alt;
+                caption = event.srcElement.getElementsByClassName("gallery-item-caption")[0].innerHTML;
+            } else if (event.srcElement.tagName === "P") {
+                // If the event target is the p, set the src of the modal img to the src of the img inside the div
+                src = event.srcElement.parentElement.getElementsByTagName("img")[0].getAttribute("data-src");
+                alt = event.srcElement.parentElement.getElementsByTagName("img")[0].alt;
+                caption = event.srcElement.innerHTML;
+            }
+
+            // Set the src of the modal img to the src of the clicked img
+            modal_img.src = src;
+            modal_img.alt = alt;
+
+            // Set the caption of the modal to the alt of the clicked img
+            modal_caption.innerHTML = caption;
+
+            // Update gallery-modal-image-container to have background image
+            const modal_img_container = modal.getElementsByClassName("gallery-modal-image-bg")[0];
+            modal_img_container.style.backgroundImage = `url(${src})`;
+
+            // Spool up the modal (remove hidden class)
+            modal.classList.remove("gallery-modal-hidden");
+            modal.classList.add("gallery-modal");
+        }
+
+        return gallery_item_click_helper(event);
+    }
+
+    const gallery_modal_init = (galleryModalId) => {
+        const gallery_modal = document.getElementById(galleryModalId);
+        const gallery_modal_close = gallery_modal.getElementsByClassName("gallery-modal-close")[0];
+
+        gallery_modal_close.onclick = () => {
+            gallery_modal.classList.add("gallery-modal-hidden");
+            gallery_modal.classList.remove("gallery-modal");
+        }
+    }
+
+    const gallery_item_init = (galleryModalId) => {
+        const gallery_items = document.getElementsByClassName("gallery-item");
+        for (let i = 0; i < gallery_items.length; i++) {
+            gallery_items[i].onclick = (event) => {
+                gallery_item_click(event, galleryModalId);
+            }
+        }
+    }
+
     window.onload = function () {
         // init_rt();
         init_gallery();
+        gallery_modal_init("gallery-modal");
+        gallery_item_init("gallery-modal");
 
         // Add event listener to contact form
         const form = document.getElementById("contact-form");
@@ -137,6 +201,6 @@
     }
 
     window.onresize = function () {
-        init_rt();
+        // init_rt();
     }
 })();
