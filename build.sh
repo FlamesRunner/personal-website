@@ -14,10 +14,6 @@ done
 
 echo "Generating thumbnails and WEBP images for the gallery..."
 
-# Download mogrify and awscli
-sudo apt-get update -y &> /dev/null
-sudo apt-get install awscli imagemagick -y &> /dev/null
-
 # Enter the gallery directory
 #cd ./src/assets/media/gallery
 cd $PROJECT_DIR/src/assets/media/gallery
