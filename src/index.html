@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Andrew Hong's website">
-    <link href="https://cdn.ahong.ca/assets/css/index.css" rel="stylesheet" type="text/css">
-    <script src="https://cdn.ahong.ca/assets/js/index.js"></script>
+    <link href="/assets/css/index.css" rel="stylesheet" type="text/css">
+    <script src="/assets/js/index.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora&display=swap" rel="stylesheet">
@@ -29,23 +29,34 @@
             </div>
         </div>
     </div>
-    <div id="home-section"></div>
-    <div class="container">
-        <div class="header-1">
-        </div>
-        <div class="header-2">
-            <div class="header-2-content">
-                <img src="https://cdn.ahong.ca/assets/media/profile.png" alt="Andrew Hong">
-                <h1>Andrew Hong</h1>
+    <div id="home-section" class="nav-section">
+        <div class="container-without-padding">
+            <div class="header-1">
+            </div>
+            <div class="header-2">
+                <div class="header-2-content">
+                    <img src="https://cdn.ahong.ca/assets/media/profile.png" alt="Andrew Hong">
+                    <h1>Andrew Hong</h1>
+                </div>
             </div>
         </div>
-        <nav class="nav">
-            <ul>
-                <li><a href="#home-section">Home</a></li>
-                <li><a href="#contact-form-section">Contact</a></li>
-                <li><a href="https://github.com/FlamesRunner">GitHub</a></li>
-            </ul>
-        </nav>
+    </div>
+    <nav class="nav">
+        <ul class="nav-desktop">
+            <li><a class="nav-link-active" href="#home-section" data-section="home-section">Home</a></li>
+            <li><a href="#contact-form-section" data-section="contact-form-section">Contact</a></li>
+            <li><a href="#projects-section" data-section="projects-section">Projects</a></li>
+            <li><a href="#resume-section" data-section="resume-section">Resume</a></li>
+            <li><a href="#gallery-section" data-section="gallery-section">Gallery</a></li>
+        </ul>
+
+        <ul class="nav-mobile">
+            <li><a class="nav-link-active" href="#home-section">Home</a></li>
+            <li><a href="#contact-form-section">Contact</a></li>
+            <li><a href="#resume-section">Resume</a></li>
+        </ul>
+    </nav>
+    <div class="container">
         <div class="content">
             <h3>Hey there!</h3>
             <p>I'm Andrew, an alumnus of the <a target="_blank" href="http://www.utsc.toronto.edu">University of
@@ -57,196 +68,214 @@
             </p>
             <p>In my free time, I enjoy coding, travelling, watching the occasional video or two, sometimes cooking
                 something new and trying new food.</p>
-            <p>Recently, I completed a IT quality assurance internship at the City of Toronto. If all goes well, I will either enter the industry and I may seek out a master's degree, should I find a sufficiently interesting topic.</p>
+            <p>Recently, I completed a IT quality assurance internship at the City of Toronto. After having the chance
+                to
+                visit Japan and Hong Kong in November 2024, I am now seeking a full-time position. Eventually, I hope to
+                return to school to complete a master's degree in a topic of interest.</p>
             <p>I'm always happy to speak with someone new, so please feel free to contact me, whether you're talking
                 business or just want to say hi :&#41;</p>
 
             <div class="separator"></div>
 
-            <h3>Ways to reach me</h3>
-            <p>There's a few ways through which you can speak with me:</p>
-            <ul>
-                <li>Personal correspondence: <a href="mailto:andrew@ahong.ca">andrew@ahong.ca</a></li>
-                <li>Business inquries: <a href="mailto:hello@ahong.ca">hello@ahong.ca</a></li>
-                <li>Phone number: +1 (647) 570 [fourteen hundred and eighty seven]</li>
-                <li><a target="_blank" href="https://www.linkedin.com/in/andrew-h-a9b239139/">LinkedIn</a></li>
-            </ul>
-            <p>I also have a small presence at <a href="http://individual.utoronto.ca/andrew_hong/">UTorWeb</a>.</p>
+            <div id="contact-form-section" class="nav-section">
+                <h3>Ways to reach me</h3>
+                <p>I'm happy to accept correspondence through any of the below:</p>
+                <ul>
+                    <li>Personal correspondence: <a href="mailto:andrew@ahong.ca">andrew@ahong.ca</a> or <a href="mailto:andrewk.hong@alumni.utoronto.ca">andrewk.hong@alumni.utoronto.ca</a></li>
+                    <li>Business inquries: <a href="mailto:hello@ahong.ca">hello@ahong.ca</a></li>
+                    <li>Primary phone number: +1 (416) 912 [five thousand, eight hundred, and fifty five]</li>
+                    <li><a target="_blank" href="https://www.linkedin.com/in/andrew-h-a9b239139/">LinkedIn</a></li>
+                </ul>
+                <p>I also have a small presence at <a href="http://individual.utoronto.ca/andrew_hong/">UTorWeb</a>.</p>
 
-            <div class="separator"></div>
+                <br />
+                <h4>Contact form</h4>
 
-            <div id="contact-form-section"></div>
+                <p>Alternatively, you can use the form below to contact me. I'll try to get back to you as soon as
+                    possible.
+                </p>
 
-            <h3>Contact form</h3>
-
-            <p>Alternatively, you can use the form below to contact me. I'll try to get back to you as soon as possible.
-            </p>
-
-            <div class="contact-form">
-                <div id="contact-form-status" class="contact-form-status"></div>
-                <form action="/api/submit" id="contact-form">
-                    <input class="contact-form-input" type="text" name="name" placeholder="Name" required />
-                    <input class="contact-form-input" type="email" name="email" placeholder="Email" required />
-                    <textarea class="contact-form-textarea" for="contact-form" name="message" placeholder="Message"
-                        required></textarea>
-                    <div class="cf-turnstile" data-sitekey="0x4AAAAAAAIAaGqPmjpXDLyV"></div>
-                    <div class="spacer"></div>
-                    <input class="contact-form-submit" type="submit" value="Send" />
-                </form>
-            </div>
-
-            <div class="separator"></div>
-
-            <h3>Projects</h3>
-            <p>I've had the opportunity to work on quite a few projects in the past. Here is a 360-frame render of the
-                2D renderer:</p>
-
-            <div class="spacer"></div>
-            <!-- <canvas id="rt-canvas"></canvas> -->
-            <div class="rt-video">
-                <video id="rt-video" autoplay loop muted playsinline>
-                    <source src="https://cdn.ahong.ca/assets/media/rt-2d.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-            </div>
-
-            <p>... and some other projects I've worked on:</p>
-            <ul>
-                <li><a href="https://github.com/FlamesRunner/MCPv2">MCPv2</a> &mdash; An open-source game server control
-                    panel with support for remote file-management, power controls and more. It makes use of React,
-                    NodeJS, Python + Flask and C++.</li>
-                <li><a href="https://cdn.ahong.ca/assets/media/B20A3-main.zip">Course website</a> &mdash; An open-source course LMS
-                    and webpage</li>
-                <li><a href="https://cdn.ahong.ca/assets/media/rt-2d.zip">Ray Tracer (2D)</a> &mdash; A 2D ray tracer
-                    written in C for CSC D18.</li>
-                <li><a href="https://cdn.ahong.ca/assets/media/rt-3d.zip">Ray Tracer (3D)</a>
-                    &mdash; A 3D
-                    ray tracer written in C for CSC D18.</li>
-            </ul>
-
-            <div class="separator"></div>
-
-            <h3>Resume</h3>
-
-            <p>Click <a href="https://cdn.ahong.ca/assets/media/resume.pdf">this link</a> to view my resume. If you
-                would like to contact me, please use the information above.</p>
-            <p>Highlights:</p>
-            <ul>
-		<li>Graduated with an Honours Bachelor of Science with Distinction and a specialization in Computer Science</li>
-                <li>Computer science courses taken out of interest: Computer graphics (CSCD18), social and information
-                    networks (CSCC46), web programming (CSCC09, CSCB20), databases (CSCC43), operating systems (CSCC69).
-                    The average achieved among these courses is 84.6%.</li>
-                <li>I am a Dean's list recipient for 2020 and 2021</li>
-                <li>I have experience with React, NodeJS, Python, C, NodeJS, React, PHP, HTML/CSS/JS, SQL, Linux systems
-                    administration and more</li>
-                <li>I can speak and write in French to the CEFR B1 level</li>
-                <li>Software development internship at Fortran Traffic Systems Limited in Summer 2022</li>
-                <li>Part-time web developer at Varsity Publications Inc. from January 2021 to April 2024</li>
-            	<li>IT Quality Assurance internship at the City of Toronto, in Summer 2024</li>
-	    </ul>
-
-            <div class="separator"></div>
-
-            <h3>Gallery</h3>
-
-            <div class="spacer"></div>
-            <div class="spacer"></div>
-
-            <div class="gallery">
-                <div class="gallery-item">
-                    <img src="https://cdn.ahong.ca/assets/media/gallery/thumbnails/1.webp"
-                        data-src="https://cdn.ahong.ca/assets/media/gallery/1.jpg"
-                        alt="Mendenhall Glacier, Alaska" />
-                    <p class="gallery-item-caption">Mendenhall Glacier, Alaska</p>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://cdn.ahong.ca/assets/media/gallery/thumbnails/2.webp"
-                        data-src="https://cdn.ahong.ca/assets/media/gallery/2.jpg"
-                        alt="Example render from my ray tracer" />
-                    <p class="gallery-item-caption">Render from my ray tracer</p>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://cdn.ahong.ca/assets/media/gallery/thumbnails/3.webp"
-                        data-src="https://cdn.ahong.ca/assets/media/gallery/3.jpg" alt="Glacier Bay, Alaska" />
-                    <p class="gallery-item-caption">Glacier Bay, Alaska</p>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://cdn.ahong.ca/assets/media/gallery/thumbnails/4.webp"
-                        data-src="https://cdn.ahong.ca/assets/media/gallery/4.jpg" alt="Juneau, Alaska" />
-                    <p class="gallery-item-caption">Juneau, Alaska</p>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://cdn.ahong.ca/assets/media/gallery/thumbnails/5.webp"
-                        data-src="https://cdn.ahong.ca/assets/media/gallery/5.jpg"
-                        alt="Seoul, South Korea - Olympic Park" />
-                    <p class="gallery-item-caption">Seoul, South Korea - Olympic Park</p>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://cdn.ahong.ca/assets/media/gallery/thumbnails/cg_christmas.webp"
-                        data-src="https://cdn.ahong.ca/assets/media/gallery/cg_christmas.jpg"
-                        alt="Photo-realistic ray tracer depth-of-field renderx" />
-                    <p class="gallery-item-caption">Photo-realistic path tracer depth-of-field render</p>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://cdn.ahong.ca/assets/media/gallery/thumbnails/cg_cornell.webp"
-                        data-src="https://cdn.ahong.ca/assets/media/gallery/cg_cornell.jpg"
-                        alt="Photo-realistic ray tracer Cornell box" />
-                    <p class="gallery-item-caption">Photo-realistic path tracer Cornell box</p>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://cdn.ahong.ca/assets/media/gallery/thumbnails/6.webp"
-                        data-src="https://cdn.ahong.ca/assets/media/gallery/6.jpg"
-                        alt="Skiing with friends at Mount St. Louis Moonstone. Me at centre, Jay on the right and Mackenzie on the left." />
-                    <p class="gallery-item-caption">Skiing with Mackenzie, me and Jay</p>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://cdn.ahong.ca/assets/media/gallery/thumbnails/7.webp"
-                        data-src="https://cdn.ahong.ca/assets/media/gallery/7.jpg"
-                        alt="Ski slope at Mount St. Louis Moonstone." />
-                    <p class="gallery-item-caption">Ski slope at Mount St. Louis Moonstone</p>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://cdn.ahong.ca/assets/media/gallery/thumbnails/8.webp"
-                        data-src="https://cdn.ahong.ca/assets/media/gallery/8.jpg"
-                        alt="The Falls at Niagara river and foliage." />
-                    <p class="gallery-item-caption">The Falls at Niagara river</p>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://cdn.ahong.ca/assets/media/gallery/thumbnails/9.webp"
-                        data-src="https://cdn.ahong.ca/assets/media/gallery/9.jpg"
-                        alt="Convocation Hall as I graduated" />
-                    <p class="gallery-item-caption">Convocation Hall as I graduated</p>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://cdn.ahong.ca/assets/media/gallery/thumbnails/10.webp"
-                        data-src="https://cdn.ahong.ca/assets/media/gallery/10.jpg"
-                        alt="My grandmother, parents and I after convocation (blurred for privacy)" />
-                    <p class="gallery-item-caption">My grandmother, parents and I after convocation (blurred for privacy)</p>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://cdn.ahong.ca/assets/media/gallery/thumbnails/11.webp"
-                        data-src="https://cdn.ahong.ca/assets/media/gallery/11.jpg"
-                        alt="Tokyo Skytree, around 10:30 PM JST. Dark skies, warm city lights, narrow streets and Sensō-ji temple in view. The Tokyo Skytree is a structure that starts with a base and thins out towards the top, has two observation decks two thirds of the way to the top and is lit in red and white LED colours across the tower." />
-                    <p class="gallery-item-caption">Tokyo Skytree, 10:30PM with Sensō-ji temple in view.</p>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://cdn.ahong.ca/assets/media/gallery/thumbnails/12.webp"
-                        data-src="https://cdn.ahong.ca/assets/media/gallery/12.jpg"
-                        alt="Tokyo Skytree, early evening. Dark skies, Sensō-ji temple lit, bright city lights and narrow streets. The Tokyo Skytree is a structure that starts with a base and thins out towards the top, has two observation decks two thirds of the way to the top and is lit in purple at the top and in rainbow LED colours across the tower." />
-                    <p class="gallery-item-caption">Tokyo Skytree, early evening. Sensō-ji temple and the city are lit up.</p>
+                <div class="contact-form">
+                    <div id="contact-form-status" class="contact-form-status"></div>
+                    <form action="/api/submit" id="contact-form">
+                        <input class="contact-form-input" type="text" name="name" placeholder="Name" required />
+                        <input class="contact-form-input" type="email" name="email" placeholder="Email" required />
+                        <textarea class="contact-form-textarea" for="contact-form" name="message" placeholder="Message"
+                            required></textarea>
+                        <div class="cf-turnstile" data-sitekey="0x4AAAAAAAIAaGqPmjpXDLyV"></div>
+                        <div class="spacer"></div>
+                        <input class="contact-form-submit" type="submit" value="Send" />
+                    </form>
                 </div>
             </div>
 
-            <p>I love taking photos of interesting experiences -- even if my photography skills are somewhat lackluster.
-                I do hope that, should there be any glaring issues, that you might forgive me (and perhaps offer some suggestions).</p>
-            <p>In any case, of all the places I have had the opportunity to visit, I think my favourites are Banff
-                National Park in Alberta, Canada, and Glacier Bay in Alaska. The atmosphere you experience is simply
-                breathtaking,
-                with Banff's beautiful bodies of water and Glacier Bay's cliffs of ancient ice.</p>
-
             <div class="separator"></div>
 
-            <p class="credit-line">Copyright &copy; <span id="copyright-year">2024</span> Andrew Hong.</p>
+            <div id="projects-section" class="nav-section">
+                <h3>Projects</h3>
+                <p>I've had the opportunity to work on quite a few projects in the past. Here is a 360-frame render of
+                    the
+                    2D renderer:</p>
+
+                <div class="spacer"></div>
+                <!-- <canvas id="rt-canvas"></canvas> -->
+                <div class="rt-video">
+                    <video id="rt-video" autoplay loop muted playsinline>
+                        <source src="https://cdn.ahong.ca/assets/media/rt-2d.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+
+                <p>... and some other projects I've worked on:</p>
+                <ul>
+                    <li><a href="https://github.com/FlamesRunner/MCPv2">MCPv2</a> &mdash; An open-source game server
+                        control
+                        panel with support for remote file-management, power controls and more. It makes use of React,
+                        NodeJS, Python + Flask and C++.</li>
+                    <li><a href="https://cdn.ahong.ca/assets/media/B20A3-main.zip">Course website</a> &mdash; An
+                        open-source
+                        course LMS
+                        and webpage</li>
+                    <li><a href="https://cdn.ahong.ca/assets/media/rt-2d.zip">Ray Tracer (2D)</a> &mdash; A 2D ray
+                        tracer
+                        written in C for CSC D18.</li>
+                    <li><a href="https://cdn.ahong.ca/assets/media/rt-3d.zip">Ray Tracer (3D)</a>
+                        &mdash; A 3D
+                        ray tracer written in C for CSC D18.</li>
+                </ul>
+            </div>
+            <div class="separator"></div>
+
+            <div id="resume-section" class="nav-section">
+                <h3>Resume</h3>
+
+                <p>Click <a href="https://cdn.ahong.ca/assets/media/resume.pdf">this link</a> to view my resume. If you
+                    would like to contact me, please use the information above.</p>
+                <p>Highlights:</p>
+                <ul>
+                    <li>Graduated with an Honours Bachelor of Science with Distinction and a specialization in Computer
+                        Science
+                    </li>
+                    <li>Computer science courses taken out of interest: Computer graphics (CSCD18), social and
+                        information
+                        networks (CSCC46), web programming (CSCC09, CSCB20), databases (CSCC43), operating systems
+                        (CSCC69), computer and network security (CSCD27), computer networks (CSCD58), computer ethics (CSCD03).
+                        The average achieved among these courses is 84%.</li>
+                    <li>I am a Dean's list recipient for 2020 and 2021</li>
+                    <li>I have experience with React, NodeJS, Python, C, NodeJS, React, PHP, Java, HTML/CSS/JS, SQL, Linux
+                        systems
+                        administration and more</li>
+                    <li>I can speak and write in French to the CEFR B1 level</li>
+                    <li>Software development internship at Fortran Traffic Systems Limited in Summer 2022</li>
+                    <li>Part-time web developer at Varsity Publications Inc. from January 2021 to April 2024</li>
+                    <li>IT Quality Assurance internship at the City of Toronto, in Summer 2024</li>
+                </ul>
+            </div>
+            <div class="separator"></div>
+
+            <div id="gallery-section" class="nav-section">
+                <h3>Gallery</h3>
+
+                <div class="spacer"></div>
+                <div class="spacer"></div>
+
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="https://cdn.ahong.ca/assets/media/gallery/thumbnails/1.webp"
+                            data-src="https://cdn.ahong.ca/assets/media/gallery/1.jpg"
+                            alt="Mendenhall Glacier, Alaska" />
+                        <p class="gallery-item-caption">Mendenhall Glacier, Alaska</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://cdn.ahong.ca/assets/media/gallery/thumbnails/2.webp"
+                            data-src="https://cdn.ahong.ca/assets/media/gallery/2.jpg"
+                            alt="Example render from my ray tracer" />
+                        <p class="gallery-item-caption">Render from my ray tracer</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://cdn.ahong.ca/assets/media/gallery/thumbnails/3.webp"
+                            data-src="https://cdn.ahong.ca/assets/media/gallery/3.jpg" alt="Glacier Bay, Alaska" />
+                        <p class="gallery-item-caption">Glacier Bay, Alaska</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://cdn.ahong.ca/assets/media/gallery/thumbnails/4.webp"
+                            data-src="https://cdn.ahong.ca/assets/media/gallery/4.jpg" alt="Juneau, Alaska" />
+                        <p class="gallery-item-caption">Juneau, Alaska</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://cdn.ahong.ca/assets/media/gallery/thumbnails/5.webp"
+                            data-src="https://cdn.ahong.ca/assets/media/gallery/5.jpg"
+                            alt="Seoul, South Korea - Olympic Park" />
+                        <p class="gallery-item-caption">Seoul, South Korea - Olympic Park</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://cdn.ahong.ca/assets/media/gallery/thumbnails/cg_christmas.webp"
+                            data-src="https://cdn.ahong.ca/assets/media/gallery/cg_christmas.jpg"
+                            alt="Photo-realistic ray tracer depth-of-field renderx" />
+                        <p class="gallery-item-caption">Photo-realistic path tracer depth-of-field render</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://cdn.ahong.ca/assets/media/gallery/thumbnails/cg_cornell.webp"
+                            data-src="https://cdn.ahong.ca/assets/media/gallery/cg_cornell.jpg"
+                            alt="Photo-realistic ray tracer Cornell box" />
+                        <p class="gallery-item-caption">Photo-realistic path tracer Cornell box</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://cdn.ahong.ca/assets/media/gallery/thumbnails/7.webp"
+                            data-src="https://cdn.ahong.ca/assets/media/gallery/7.jpg"
+                            alt="Ski slope at Mount St. Louis Moonstone." />
+                        <p class="gallery-item-caption">Ski slope at Mount St. Louis Moonstone</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://cdn.ahong.ca/assets/media/gallery/thumbnails/8.webp"
+                            data-src="https://cdn.ahong.ca/assets/media/gallery/8.jpg"
+                            alt="The Falls at Niagara river and foliage." />
+                        <p class="gallery-item-caption">The Falls at Niagara river</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://cdn.ahong.ca/assets/media/gallery/thumbnails/9.webp"
+                            data-src="https://cdn.ahong.ca/assets/media/gallery/9.jpg"
+                            alt="Convocation Hall as I graduated" />
+                        <p class="gallery-item-caption">Convocation Hall as I graduated</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://cdn.ahong.ca/assets/media/gallery/thumbnails/10.webp"
+                            data-src="https://cdn.ahong.ca/assets/media/gallery/10.jpg"
+                            alt="My grandmother, parents and I after convocation (blurred for privacy)" />
+                        <p class="gallery-item-caption">My grandmother, parents and I after convocation (blurred for
+                            privacy)
+                        </p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://cdn.ahong.ca/assets/media/gallery/thumbnails/11.webp"
+                            data-src="https://cdn.ahong.ca/assets/media/gallery/11.jpg"
+                            alt="Tokyo Skytree, around 10:30 PM JST. Dark skies, warm city lights, narrow streets and Sensō-ji temple in view. The Tokyo Skytree is a structure that starts with a base and thins out towards the top, has two observation decks two thirds of the way to the top and is lit in red and white LED colours across the tower." />
+                        <p class="gallery-item-caption">Tokyo Skytree, 10:30PM with Sensō-ji temple in view.</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://cdn.ahong.ca/assets/media/gallery/thumbnails/12.webp"
+                            data-src="https://cdn.ahong.ca/assets/media/gallery/12.jpg"
+                            alt="Tokyo Skytree, early evening. Dark skies, Sensō-ji temple lit, bright city lights and narrow streets. The Tokyo Skytree is a structure that starts with a base and thins out towards the top, has two observation decks two thirds of the way to the top and is lit in purple at the top and in rainbow LED colours across the tower." />
+                        <p class="gallery-item-caption">Tokyo Skytree, early evening. Sensō-ji temple and the city are
+                            lit
+                            up.
+                        </p>
+                    </div>
+                </div>
+
+                <p>I love taking photos of interesting experiences -- even if my photography skills are somewhat
+                    lackluster.
+                    I do hope that, should there be any glaring issues, that you might forgive me (and perhaps offer
+                    some
+                    suggestions).</p>
+                <p>In any case, of all the places I have had the opportunity to visit, I think my favourites are Banff
+                    National Park in Alberta, Canada, and Glacier Bay in Alaska. The atmosphere you experience is simply
+                    breathtaking,
+                    with Banff's beautiful bodies of water and Glacier Bay's cliffs of ancient ice.</p>
+            </div>
+            <div class="separator"></div>
+
+            <p class="credit-line">Copyright &copy; <span id="copyright-year">2025</span> Andrew Hong.</p>
         </div>
     </div>
 

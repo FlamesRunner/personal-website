@@ -121,7 +121,7 @@
             const modal = document.getElementById(galleryModalId);
             const modal_img = modal.getElementsByClassName("gallery-modal-image")[0];
             const modal_caption = modal.getElementsByClassName("gallery-modal-caption")[0];
-            
+
             console.log(event);
             console.log(event.srcElement);
 
@@ -209,4 +209,51 @@
     window.onresize = function () {
         // init_rt();
     }
+
+    window.onscroll = function () {
+        // Check which section is in view
+        // If the section is in view, toggle its nav link to active
+        // <div id="home-section"></div>
+
+        // Get all section elements
+        const sections = document.getElementsByClassName("nav-section");
+
+        // Get the current scroll position
+        const scroll_position = window.scrollY;
+
+        // Check which section is in view
+        const sections_in_view = [];
+
+        for (let i = 0; i < sections.length; i++) {
+            const section = sections[i];
+            const section_id = section.id;
+            const section_top = section.offsetTop;
+            const section_bottom = section_top + section.offsetHeight;
+
+            if (scroll_position + 80 >= section_top && scroll_position <= section_bottom) {
+                sections_in_view.push(section_id);
+            }
+        }
+
+        // If more than one section is in view, choose the first one
+        // Nav links corresponding to each section have data-section="id" set
+        if (sections_in_view.length > 0) {
+            // Remove active class from other nav links (elements with data-section set)
+            const nav_links = document.querySelectorAll("a[data-section]");
+            for (let i = 0; i < nav_links.length; i++) {
+                nav_links[i].classList.remove("nav-link-active");
+            }
+
+            // Pick the section closest to the scroll position
+            let section = sections_in_view[0];
+            for (let i = 0; i < sections_in_view.length; i++) {
+                if (Math.abs(document.getElementById(section).scrollHeight - scroll_position) > Math.abs(document.getElementById(sections_in_view[i]).scrollHeight - scroll_position)) {
+                    section = sections_in_view[i];
+                }
+            }
+            const query = `a[data-section="${section}"]`;
+            const nav_link = document.querySelector(query);
+            nav_link.classList.add("nav-link-active");
+        }
+    };
 })();
