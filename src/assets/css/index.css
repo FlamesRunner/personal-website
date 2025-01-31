@@ -1,3 +1,9 @@
+/* HTML el */
+html {
+    /* enable smooth scrolling */
+    scroll-behavior: smooth;
+}
+
 /* Body styling */
 body {
     margin: 0;
@@ -6,13 +12,11 @@ body {
     box-sizing: border-box;
     color: white;
     background-color: #4f686d;
-
-    /* enable smooth scrolling */
-    scroll-behavior: smooth;
 }
 
 a {
     color: white;
+    transition: color 0.2s ease-in-out;
 }
 
 a:hover {
@@ -37,6 +41,14 @@ h3 {
 h4 {
     font-weight: 500;
     font-size: 1.25rem;
+}
+
+.nav-desktop {
+    display: flex;
+}
+
+.nav-mobile {
+    display: none;
 }
 
 /* Gallery classes */
@@ -101,10 +113,15 @@ h4 {
     box-sizing: border-box;
     background-color: rgb(20, 65, 65);
     color: white;
+    position: sticky;
+    left: 0;
+    top: 0;
+    right: 0;
+    z-index: 100000;
+    box-shadow: 0px 0px 19px 18px rgba(0,0,0,0.1);
 }
 
 .nav>ul {
-    display: flex;
     gap: 2rem;
     list-style: none;
     margin: 0;
@@ -113,23 +130,40 @@ h4 {
 
 .nav>ul>li {
     margin-left: 0;
+    position: relative;
 }
 
 .nav>ul>li>a {
     text-decoration: none;
     color: white;
+    transition: color 0.2s ease-in-out;
 }
 
 .nav>ul>li>a:hover {
     color: rgb(255, 255, 255, 0.5);
 }
 
+.nav-link-active {
+    text-decoration: underline !important;
+    font-weight: bold;
+}
+
+.vertical-nav-separator {
+    content: " \2219 ";
+    width: 100%;
+    height: 100%;
+}
+
 .container {
     width: 100%;
     min-height: 100vh;
-    padding: 0 20vw;
+    padding: 0 10vw;
 
     box-sizing: border-box;
+}
+
+.container-without-padding {
+    width: 100%;
 }
 
 /* Header styling: handles the box that contains an image that fades out on the bottom, and a profile picture and name in the center */
@@ -202,6 +236,24 @@ h4 {
     margin-right: 2rem;
 }
 
+.content>div>h1,
+.content>div>h2,
+.content>div>h3,
+.content>div>h4 {
+    margin: 0;
+    padding: 0 30px;
+}
+
+.content>div>p {
+    line-height: 1.5;
+    padding: 0 30px;
+}
+
+.content>div>ul {
+    margin-left: 2rem;
+    margin-right: 2rem;
+}
+
 .credit-line {
     text-align: center;
     margin-bottom: 0px !important;
@@ -249,6 +301,9 @@ h4 {
     margin-bottom: 1rem;
     color: white;
     cursor: pointer;
+    font-family: 'Lora', serif;
+    font-weight: bold;
+    transition: background-color 0.2s ease-in-out;
 }
 
 .contact-form-submit:hover {
@@ -410,6 +465,14 @@ h4 {
 
     .gallery-modal-image-bg {
         filter: blur(10px);
+    }
+
+    .nav-desktop {
+        display: none;
+    }
+    
+    .nav-mobile {
+        display: flex;
     }
 }
 
