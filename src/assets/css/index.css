@@ -140,7 +140,7 @@ h4 {
     background-size: cover;
     background-position: center center;
     background-color: rgb(8, 26, 26);
-    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgb(8, 26, 26) 90%), url('https://cdn.ahong.ca/ahong-ca/assets/media/bg/bg1.webp');
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgb(8, 26, 26) 90%), url('https://cdn.ahong.ca/assets/media/bg/bg1.webp');
 }
 
 .header-2 {
