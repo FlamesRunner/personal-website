@@ -6,7 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Andrew Hong's website">
     <link href="/assets/css/index.css" rel="stylesheet" type="text/css">
+    <link href="/assets/css/gallery.css" rel="stylesheet" type="text/css">
     <script src="/assets/js/index.js"></script>
+    <script src="/assets/js/gallery.js"></script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora&display=swap" rel="stylesheet">
@@ -17,15 +20,18 @@
 </head>
 
 <body>
-    <div id="gallery-modal" class="gallery-modal-invisible gallery-modal-hidden">
+    <div id="gallery-modal" class="gallery-modal gallery-modal-closed">
+        <div class="gallery-modal-topbar">
+            <div class="gallery-modal-topbar-spacer"></div>
+            <div class="gallery-modal-caption"></div>
+            <div class="gallery-modal-close" role="button">Close</div>
+            <div class="gallery-modal-topbar-spacer"></div>
+        </div>
         <div class="gallery-modal-content">
             <div class="gallery-modal-image-container">
                 <div class="gallery-modal-image-bg"></div>
+                <img class="gallery-modal-image-loader"></img>
                 <img class="gallery-modal-image" src="" alt="" />
-            </div>
-            <div class="gallery-data">
-                <div class="gallery-modal-caption"></div>
-                <div class="gallery-modal-close">Close</div>
             </div>
         </div>
     </div>
@@ -61,18 +67,25 @@
     <div class="container">
         <div class="content">
             <h3>Hey there!</h3>
-            <p>I'm Andrew, an alumnus of the <a target="_blank" href="http://www.utsc.toronto.edu">University of
-                    Toronto</a>. I studied Computer Science in my degree and have worked with various platforms and
-                technologies, such as the traditional PHP (and HTML/CSS/JS/SQL) stack, Java, C and some NodeJS +
-                React. I
-                also have some basic experience with Linux systems administration. If you'd like to see some of my
+            <p>I'm Andrew, an computer science alumnus of the <a target="_blank"
+                    href="http://www.utsc.toronto.edu">University of
+                    Toronto</a>. Over my university career and beyond, I've used a variety of different programming
+                languages and technologies, ranging from Powershell/Lua, some of the first languages/ I ever wrote code
+                more than a decade ago, to the stacks I use today, like MERN (MongoDB/Express/React/NodeJS), LAMP
+                (PHP/SQL/web
+                languages), Typescript, Java, Bash, C/C++ and more. In that time, I also learned about running my own
+                virtual and physical servers, which helped me understand the basics of Linux systems administration.
+                If you'd like to see some of
+                my
                 projects, visit my <a href="https://github.com/FlamesRunner">GitHub</a> page and have a look.
             </p>
             <p>In my free time, I enjoy coding, travelling, watching the occasional video or two, sometimes cooking
                 something new and trying new food.</p>
-            <p>Recently, I completed a IT quality assurance internship at the City of Toronto. After having the chance
-                to
-                visit Japan and Hong Kong in November 2024, I am now working at MPAC as a Junior Systems Developer in test automation. Eventually, I hope to
+            <p>In summer of 2024, I completed a IT quality assurance internship at the City of Toronto, sparking the
+                beginning of
+                my career in the field. After a visit to Japan and Hong Kong in November of that year and several
+                months' of rest, I started a position at MPAC as a Junior Systems Developer in
+                test automation. Eventually, I hope to
                 return to school to complete a master's degree in a topic of interest.</p>
             <p>I'm always happy to speak with someone new, so please feel free to contact me, whether you're talking
                 business or just want to say hi :&#41;</p>
@@ -83,7 +96,8 @@
                 <h3>Ways to reach me</h3>
                 <p>I'm happy to accept correspondence through any of the below:</p>
                 <ul>
-                    <li>Personal correspondence: <a href="mailto:andrew@ahong.ca">andrew@ahong.ca</a> or <a href="mailto:andrewk.hong@alumni.utoronto.ca">andrewk.hong@alumni.utoronto.ca</a></li>
+                    <li>Personal correspondence: <a href="mailto:andrew@ahong.ca">andrew@ahong.ca</a> or <a
+                            href="mailto:andrewk.hong@alumni.utoronto.ca">andrewk.hong@alumni.utoronto.ca</a></li>
                     <li>Business inquries: <a href="mailto:hello@ahong.ca">hello@ahong.ca</a></li>
                     <li>Primary phone number: +1 (416) 912 [five thousand, eight hundred, and fifty five]</li>
                     <li><a target="_blank" href="https://www.linkedin.com/in/andrew-h-a9b239139/">LinkedIn</a></li>
@@ -115,9 +129,7 @@
 
             <div id="projects-section" class="nav-section">
                 <h3>Projects</h3>
-                <p>I've had the opportunity to work on quite a few projects in the past. Here is a 360-frame render of
-                    the
-                    2D renderer:</p>
+                <p>A 360-frame render from the 2D renderer I wrote:</p>
 
                 <div class="spacer"></div>
                 <!-- <canvas id="rt-canvas"></canvas> -->
@@ -161,17 +173,20 @@
                     <li>Computer science courses taken out of interest: Computer graphics (CSCD18), social and
                         information
                         networks (CSCC46), web programming (CSCC09, CSCB20), databases (CSCC43), operating systems
-                        (CSCC69), computer and network security (CSCD27), computer networks (CSCD58), computer ethics (CSCD03).
+                        (CSCC69), computer and network security (CSCD27), computer networks (CSCD58), computer ethics
+                        (CSCD03).
                         The average achieved among these courses is 84%.</li>
                     <li>I am a Dean's list recipient for 2020 and 2021</li>
-                    <li>I have experience with React, NodeJS, Python, C, NodeJS, React, PHP, Java, HTML/CSS/JS, SQL, Linux
+                    <li>I have experience with React, NodeJS, Python, C, NodeJS, React, PHP, Java, HTML/CSS/JS, SQL,
+                        Linux
                         systems
                         administration and more</li>
                     <li>I can speak and write in French to the CEFR B1 level</li>
                     <li>Software development internship at Fortran Traffic Systems Limited in Summer 2022</li>
                     <li>Part-time web developer at Varsity Publications Inc. from January 2021 to April 2024</li>
                     <li>IT Quality Assurance internship at the City of Toronto, in Summer 2024</li>
-                    <li>Junior Systems Developer at Municipal Property Assessment Corporation, April 2025 - present</li>
+                    <li>Junior Systems Developer (Test Automation) at Municipal Property Assessment Corporation, April
+                        2025 - present</li>
                 </ul>
             </div>
             <div class="separator"></div>
@@ -266,12 +281,9 @@
                     </div>
                 </div>
 
-                <p>I love taking photos of interesting experiences -- even if my photography skills are somewhat
-                    lackluster.
-                    I do hope that, should there be any glaring issues, that you might forgive me (and perhaps offer
-                    some
-                    suggestions).</p>
-                <p>In any case, of all the places I have had the opportunity to visit, I think my favourites are Banff
+                <p>I love taking photos of any experiences that pique my interest -- especially when I'm traveling
+                    abroad.</p>
+                <p>Of all the places I have had the opportunity to visit, I think my favourites are Banff
                     National Park in Alberta, Canada, and Glacier Bay in Alaska. The atmosphere you experience is simply
                     breathtaking,
                     with Banff's beautiful bodies of water and Glacier Bay's cliffs of ancient ice.</p>
@@ -282,7 +294,7 @@
         </div>
     </div>
 
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <!-- <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script> -->
 </body>
 
 </html>

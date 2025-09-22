@@ -25,7 +25,7 @@ cp *.jpg ./thumbnails
 
 # Resize the JPG images by 50%
 cd ./thumbnails
-mogrify -resize 50% -auto-orient *.jpg
+mogrify -resize 50% -quality 50 -auto-orient *.jpg
 
 # Convert the JPG images to WEBP at 80% quality
 mogrify -format webp -quality 80 -auto-orient *.jpg
