@@ -56,8 +56,7 @@ jobs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v6
       with:
-        context: ./blog
-        file: Dockerfile
+        context: "{{defaultContext}}:blog"
         push: true
         tags: ghcr.io/flamesrunner/personal-website:latest
       
