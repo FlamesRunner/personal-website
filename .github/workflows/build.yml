@@ -58,6 +58,6 @@ jobs:
       with:
         context: "{{defaultContext}}:blog"
         push: true
-        tags: ghcr.io/flamesrunner/personal-website:latest
+        tags: ghcr.io/flamesrunner/personal-website-blog:latest
       
     
