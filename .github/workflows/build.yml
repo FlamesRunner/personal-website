@@ -29,15 +29,13 @@ jobs:
         R2_DEFAULT_REGION: ${{ secrets.R2_DEFAULT_REGION }}
         R2_BUCKET_NAME: ${{ secrets.R2_BUCKET_NAME }}
         PROJECT_DIR: ${{ github.workspace }}
-  build-and-deploy-blog:
+  build-blog:
     environment: Build
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v6
-
-      # Must run in blog/ to build the Docker image
 
     - name: Login to GitHub Container Registry
       uses: docker/login-action@v3
@@ -59,5 +57,26 @@ jobs:
         context: "{{defaultContext}}:blog"
         push: true
         tags: ghcr.io/flamesrunner/personal-website-blog:latest
-      
-    
+
+  deploy-blog:
+    environment: Build
+    runs-on: ubuntu-latest
+    needs: build-blog
+
+    steps:
+      - name: Connect to Tailscale
+        uses: tailscale/github-action@v2
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_KEY }}
+          tags: tag:ci
+      # SSH into the host variables.KUBE_CONTROLLER_USER@variables.KUBE_CONTROLLER with key secrets.KUBE_CONTROLLER_KEY
+      # and run the command ./deploy.sh (has suid bit set to run rollout command as root)
+      - name: Deploy blog
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ vars.KUBE_CONTROLLER }}
+          username: ${{ vars.KUBE_CONTROLLER_USER }}
+          key: ${{ secrets.KUBE_CONTROLLER_KEY }}
+          script: |
+            ./deploy.sh
