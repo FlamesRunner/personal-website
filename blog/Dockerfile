@@ -25,6 +25,9 @@ FROM nginx:alpine
 # Copy the build output to the NGINX html directory
 COPY --from=build /app/build /usr/share/nginx/html
 
+# Remove server_tokens
+RUN sed -i 's/http {/http {\n    server_tokens off;/' /etc/nginx/nginx.conf
+
 # Expose port 80
 EXPOSE 80
 
