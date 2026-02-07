@@ -79,4 +79,4 @@ jobs:
           username: ${{ vars.KUBE_CONTROLLER_USER }}
           key: ${{ secrets.KUBE_CONTROLLER_KEY }}
           script: |
-            ./deploy.sh
+            sudo ./deploy.sh
