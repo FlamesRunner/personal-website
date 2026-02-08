@@ -102,6 +102,15 @@ post {
         width: 100%;
         border-radius: 10px;
     }
+
+    & a {
+        color: white;
+        transition: all 0.3s linear;
+    }
+
+    & a:hover {
+        color: #e4e4e4;
+    }
 }
 
 .post-image {
