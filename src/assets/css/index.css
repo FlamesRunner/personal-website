@@ -178,6 +178,7 @@ h4 {
     min-height: calc(100vh - 45vh);
     padding: 30px 0;
     background-color: rgb(36, 47, 49);
+    position: relative;
 }
 
 .content>h1,
