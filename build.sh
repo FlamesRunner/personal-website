@@ -46,6 +46,9 @@ aws configure set aws_access_key_id $R2_ACCESS_KEY_ID
 aws configure set aws_secret_access_key $R2_ACCESS_KEY_SECRET
 aws configure set default.region $R2_DEFAULT_REGION
 
+# Update assets - check JS/CSS/HTML files for {{CDN_URL}} references, and replace them with https://cdn.ahong.ca
+find ./src -type f \( -name "*.js" -o -name "*.css" -o -name "*.html" \) -exec sed -i "s/{{CDN_URL}}/https:\/\/cdn.ahong.ca/g" {} +
+
 # Delete the existing assets
 aws s3 rm s3://$R2_BUCKET_NAME/assets --recursive --endpoint-url $R2_API_URL
 
