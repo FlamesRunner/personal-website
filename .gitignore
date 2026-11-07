@@ -3,3 +3,6 @@ node_modules/
 .DS_Store
 .DS_Store/
 src/assets/media/gallery/thumbnails
+build
+build/*
+build/
