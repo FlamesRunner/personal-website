@@ -255,7 +255,7 @@
         for (let i = 0; i < galleryItems.length; i++) {
             const galleryItemEl = galleryItems.item(i);
             const galleryItem = new GalleryItem(galleryItemEl);
-            console.log(galleryItem);
+            //console.log(galleryItem);
             galleryModal.insertGalleryItem(galleryItem);
         }
     };

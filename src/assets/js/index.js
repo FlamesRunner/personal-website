@@ -34,7 +34,24 @@
         form.reset();
     }
 
-    window.addEventListener("onload", function () {
+    const toggleMobileMenu = (event) => {
+        event.preventDefault();
+        const nav = document.getElementById("nav-mobile-menu");
+        nav.classList.toggle("nav-mobile-active");
+    }
+
+    const closeMobileMenu = (event) => {
+        event.preventDefault();
+        const nav = document.getElementById("nav-mobile-menu");
+        nav.classList.remove("nav-mobile-active");
+
+        // now navigate to the link
+        const link = event.target;
+        const href = link.getAttribute("href");
+        window.location.href = href;
+    }
+
+    window.addEventListener("load", function () {
         // Add event listener to contact form
         const form = document.getElementById("contact-form");
         form.addEventListener("submit", contact_form_handler);
@@ -42,6 +59,20 @@
         // Update copyright year
         const year = document.getElementById("copyright-year");
         year.innerHTML = new Date().getFullYear();
+
+        // Mobile nav
+        const toggleMobileNavBtn = document.getElementById("toggleMobileNavBtn");
+        toggleMobileNavBtn.addEventListener("click", (event) => {
+            toggleMobileMenu(event);
+        });
+
+        // Mobile nav link handler
+        const mobileLinks = document.querySelectorAll(".nav-mobile-link");
+        mobileLinks.forEach((link) => {
+            link.addEventListener("click", (event) => {
+                closeMobileMenu(event);
+            });
+        });
     });
 
     window.addEventListener("scroll", function () {

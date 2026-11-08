@@ -54,11 +54,20 @@
         </ul>
 
         <ul class="nav-mobile">
-            <li><a class="nav-link-active" href="#home-section">Home</a></li>
-            <li><a href="#contact-form-section">Contact</a></li>
-            <li><a href="#resume-section">Resume</a></li>
-            <li><a href="https://blog.ahong.ca">Blog</a></li>
+            <li><button class="nav-mobile-button" id="toggleMobileNavBtn">Menu</button></li>
+            <li><a class="nav-mobile-button" href="#home-section">Back to top</a></li>
         </ul>
+
+        <div id="nav-mobile-menu">
+            <ul>
+                <li><a href="#home-section" class="nav-mobile-link" data-section="home-section">Home</a></li>
+                <li><a href="#contact-form-section" class="nav-mobile-link" data-section="contact-form-section">Contact</a></li>
+                <li><a href="#projects-section" class="nav-mobile-link" data-section="projects-section">Projects</a></li>
+                <li><a href="#resume-section" class="nav-mobile-link" data-section="resume-section">Resume</a></li>
+                <li><a href="#gallery-section" class="nav-mobile-link" data-section="gallery-section">Gallery</a></li>
+                <li><a href="https://blog.ahong.ca">Blog</a></li>
+            </ul>
+        </div>
     </nav>
     <div class="container">
         <div class="content">
@@ -289,7 +298,7 @@
         </div>
     </div>
 
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <!-- <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script> -->
 </body>
 
 </html>
